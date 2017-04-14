@@ -15,6 +15,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".WishlistActivity" />
+        <activity android:name=".MyBooksActivity" />
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".BookSearch" />
+        <activity android:name=".BookSearchResultsActivity"></activity>
     </application>
 
 </manifest>
