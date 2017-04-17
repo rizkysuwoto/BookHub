@@ -1,17 +1,19 @@
 package twotom.bookhub;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Thomas on 2017-04-14.
  */
-public class User
+public class User implements Serializable
 {
     private String username;
     private String email;
     private String password;
-    private ArrayList<Book> wishlist;
-    private ArrayList<Book> myBooks;
+    private List<Book> wishlist;
+    private List<Book> myBooks;
     private int sellerRating;
     private int buyerRating;
 
@@ -87,5 +89,13 @@ public class User
 
     public void setBuyerRating(int buyerRating) {
         this.buyerRating = buyerRating;
+    }
+
+    public List<Book> getWishlist() {
+        return wishlist;
+    }
+
+    public List<Book> getMyBooks() {
+        return myBooks;
     }
 }

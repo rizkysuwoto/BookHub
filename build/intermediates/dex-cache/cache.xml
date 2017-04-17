@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="C:\Users\tq\.android\build-cache\f42a32db5d86f2d195f9a44c911ad3999ea3f25b\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="399f75732ff1ac159f9e73611536f1508bf18d3b">
+        <dex dex="C:\Users\tq\Desktop\BookHub\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_7d31da677919ceaa0d5d1494a5402860598b37e8\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\tq\.android\build-cache\75b9dfff7e91d902d49289ef803eb3f5fbbd9d48\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="d0a843615f3b5fa3a080497709f5436696149a09">
+        <dex dex="C:\Users\tq\Desktop\BookHub\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_3cea5f840f6517edd20a8a73118ee0d8ff7d21dd\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\tq\.android\build-cache\9a0bd7eb75e98bdc65f1016e82ab37e29412ad2a\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="2f7e6e2dad1bccaf68a8820820adc6c0d5b96d37">
+        <dex dex="C:\Users\tq\Desktop\BookHub\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_77dbfe141d704682d11784af47e399d95035a019\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\tq\.android\build-cache\25f44deaff87de2cdcaac71f8a93d8e775ead9bc\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="2cd4b982617e544728de0782d718a58ce1b06e3f">
+        <dex dex="C:\Users\tq\Desktop\BookHub\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_93b7013cbab3f44559bfbbd4d2594f6bde2020bb\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\tq\.android\build-cache\c0213fe804891727aa84878096e668dbed38b0e9\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="2a7ffe939ffd830b5d4052f3c1c4c235923790ce">
+        <dex dex="C:\Users\tq\Desktop\BookHub\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_cfd625465b3adf373a4e4d58179f9b2fcf2a50c5\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\tq\.android\build-cache\570ceee803db2b8e3fcb4c96d82d5870b53f06a8\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="379471b2bd17d9737c050345c08e8c7d16589784">
+        <dex dex="C:\Users\tq\Desktop\BookHub\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_e46d4eacb9d0f5bbb7595fc1bcbe862020eae79c\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\tq\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\24.0.0\support-annotations-24.0.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="2943c74db6d4346ab8c6531adac91fa05c137c40">
+        <dex dex="C:\Users\tq\Desktop\BookHub\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-24.0.0_8dadfdc1f55a428ffe34d30f478b8d5ab0a23b88\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\tq\.android\build-cache\98a937a59af06971cc551e562e1c183bd7a9aa56\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="09c5e804bc67fc0580360043dff067df574a60d4">
+        <dex dex="C:\Users\tq\Desktop\BookHub\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_a7c2b490d0c463aba66065bab1902dcafbc3cc5c\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\tq\.android\build-cache\0696e30aa6458a62a9f9abc6036d220515c33b68\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="0a5d5553c308643a9022f15513ebdd59e9c78d82">
+        <dex dex="C:\Users\tq\Desktop\BookHub\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_ec5cf32cffa7f46689dcbe2911f07ea44cc9158f\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\tq\.android\build-cache\d1e688fab7e2e8266a610fe077a856365277ad5f\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="5c5699834e9722f1c288fea2de82725d078ba127">
+        <dex dex="C:\Users\tq\Desktop\BookHub\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_94a653a2f5aeaead5159ed84b1ebfed805ee360b\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\tq\Desktop\BookHub\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="510aa6efc159983dfbffa676a0dae37568c0a46f">
+        <dex dex="C:\Users\tq\Desktop\BookHub\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_5258beace76ad663bbf7aff076c1fb94e1306928\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\tq\Desktop\BookHub\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="bb55f577c241fea8cd0a2c3fbc88927686905e0e">
+        <dex dex="C:\Users\tq\Desktop\BookHub\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_3484bab79568a729732374545996e9c65deb5ff0\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\tq\.android\build-cache\86bca2c3b3982ab5496878a87dbd399e84bc876f\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="888983f51cf34f57a93ff16832552f2f15937212">
+        <dex dex="C:\Users\tq\Desktop\BookHub\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_b488c530c116a465c391a67250d50d4fe8d1baad\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\tq\.android\build-cache\37a367c5abb5f5ab582d04941f9481c723f7c278\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="bdcc2a9572f18b8c90a3a157cab6cdfc97c6c736">
+        <dex dex="C:\Users\tq\Desktop\BookHub\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_3ca16503badc2c6fd956305b77b8a4b8905a9e8b\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\tq\.android\build-cache\c5accc381c7553018e358acf198f6335a8654726\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="6003d64df88a6ce5e961fa2bad7f1b9b97689ac1">
+        <dex dex="C:\Users\tq\Desktop\BookHub\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_ee2e8778fb1665c52b18e3d9682a6947313e08fd\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\tq\.android\build-cache\9a0bd7eb75e98bdc65f1016e82ab37e29412ad2a\output\jars\libs\internal_impl-24.0.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="fcaf463e10e69c1923ccf1edeba3b4196d239e00">
+        <dex dex="C:\Users\tq\Desktop\BookHub\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.0.0_14b18a348f88df345513d07c8288c4c8d62351e4\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\tq\.android\build-cache\7c5ce7bd221e6cb291c055b895e26319eac060d4\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="a1aa1dd9917e887bfe732cc5e561ae6ae8f9a84a">
+        <dex dex="C:\Users\tq\Desktop\BookHub\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_1b9a404e32ad3e9c5131db4594cb47eb6ab80ed2\classes.dex" />
+    </item>
+
+</items>

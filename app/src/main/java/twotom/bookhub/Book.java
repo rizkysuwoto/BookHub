@@ -1,13 +1,15 @@
 package twotom.bookhub;
 
+import java.io.Serializable;
+
 /**
  * Created by Thomas on 2017-04-14.
  */
-public class Book
+public class Book implements Serializable
 {
     private String title;
     private String author;
-    private String edition;
+    private String publisher;
     private String ISBN10;
     private String ISBN13;
 
@@ -18,18 +20,18 @@ public class Book
     {
         title = "";
         author = "";
-        edition = "";
+        publisher = "";
         ISBN10 = "";
         ISBN13 = "";
         condition = "";
         price = 0.00;
     }
 
-    public Book(String title, String author, String edition)
+    public Book(String title, String author, String publisher)
     {
         this.title = title;
         this.author = author;
-        this.edition = edition;
+        this.publisher = publisher;
     }
 
     //-----------------------------------------------------
@@ -52,12 +54,12 @@ public class Book
         this.author = author;
     }
 
-    public String getEdition() {
-        return edition;
+    public String getPublisher() {
+        return publisher;
     }
 
-    public void setEdition(String edition) {
-        this.edition = edition;
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
     }
 
     public String getISBN10() {
@@ -84,11 +86,20 @@ public class Book
         this.condition = condition;
     }
 
-    public float getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(double price) {
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "title: " + title + "\n" +
+                "author: " + author + "\n" +
+                "publisher: " + publisher + "\n" +
+                "ISBN10: " + ISBN10 + "\n" +
+                "ISBN13: " + ISBN13;
     }
 }

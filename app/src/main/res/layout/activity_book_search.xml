@@ -7,48 +7,26 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="twotom.bookhub.BookSearch">
+    tools:context=".BookSearchActivity">
 
     <EditText
+        android:id="@+id/textfield_bookSearch_isbn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textfield_bookSearch_title"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="62dp"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:text="Title" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textfield_bookSearch_author"
-        android:text="Author"
-        android:layout_below="@+id/textfield_bookSearch_title"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textfield_bookSearch_edition"
-        android:text="Edition"
-        android:layout_below="@+id/textfield_bookSearch_author"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="62dp"
+        android:hint="ISBN" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Search"
         android:id="@+id/button_bookSearch_search"
-        android:layout_below="@+id/textfield_bookSearch_edition"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="106dp" />
+        android:layout_marginTop="86dp"
+        android:layout_below="@+id/textfield_bookSearch_isbn"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

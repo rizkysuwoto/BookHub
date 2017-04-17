@@ -15,7 +15,7 @@
         android:inputType="textPersonName"
         android:text="Name"
         android:ems="10"
-        android:id="@+id/textfield_username"
+        android:id="@+id/text_login_username"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="133dp" />
@@ -24,13 +24,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Button"
-        android:id="@+id/button_change_username"
+        android:id="@+id/button_login"
         android:layout_marginBottom="58dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/textfield_username"
-        android:layout_alignStart="@+id/textfield_username"
-        android:layout_alignRight="@+id/textfield_username"
-        android:layout_alignEnd="@+id/textfield_username" />
+        android:layout_alignLeft="@+id/text_login_username"
+        android:layout_alignStart="@+id/text_login_username"
+        android:layout_alignRight="@+id/text_login_username"
+        android:layout_alignEnd="@+id/text_login_username" />
 
     <TextView
         android:layout_width="wrap_content"
