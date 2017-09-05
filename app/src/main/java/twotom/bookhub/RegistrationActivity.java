@@ -18,17 +18,17 @@ public class RegistrationActivity extends AppCompatActivity {
     public void onSubmit(View view) {
         UserDatabase userDatabase = new UserDatabase(this);
         String username =
-            ((EditText) findViewById(R.id.text_username)).getText().toString();
+            ((EditText) findViewById(R.id.text_registration_username)).getText().toString();
         if (!isUsernameValid(username, userDatabase)) {
             return;
         }
         String email =
-            ((EditText) findViewById(R.id.text_email)).getText().toString();
+            ((EditText) findViewById(R.id.text_registration_email)).getText().toString();
         if (!isEmailValid(email)) {
             return;
         }
         String password =
-            ((EditText) findViewById(R.id.text_password)).getText().toString();
+            ((EditText) findViewById(R.id.text_registration_password)).getText().toString();
         if (!isPasswordValid(password)) {
             return;
         }
