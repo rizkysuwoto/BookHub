@@ -18,6 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 public class LoginActivity extends AppCompatActivity {
 
     @Override
+    /* Demo Version
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
@@ -44,5 +45,21 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+    */
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+    }
 
+    public void onLogin(View view) {
+        //TODO: Check Database for proper username/password pair
+
+    }
+
+    public void onNewUser(View view) {
+        //TODO: Switch to Registration Screen
+
+        Intent myIntent = new Intent(LoginActivity.this, RegistrationActivity.class);
+        startActivity(myIntent);
+    }
 }
