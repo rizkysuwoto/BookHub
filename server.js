@@ -11,7 +11,7 @@ var bodyParser   = require('body-parser');
 var session      = require('express-session');
 
 
-mongoose.connect( process.env.MONGOLAB_URI || 'mongodb://localhost:12345/bookhub', function(err) {
+mongoose.connect(process.env.MONGOLAB_URI, function(err) {
     if (err) throw err;
 });
 
