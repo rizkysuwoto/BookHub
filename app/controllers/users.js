@@ -3,7 +3,7 @@ var User = require('../models/user');
 module.exports = {};
 
 module.exports.create = function(req, res) {
-    if (!req.body.name || !req.body.username || !req.body.password)
+    if (!req.body.email || !req.body.username || !req.body.password)
         return res.status(400).end('Invalid input');
 
     User.findOne({ username:  req.body.username }, function(err, user) {
@@ -12,7 +12,7 @@ module.exports.create = function(req, res) {
         } else {
 
             var newUser = new User();
-            newUser.name = req.body.name;
+            newUser.email = req.body.email;
             newUser.username = req.body.username;
             newUser.password = newUser.generateHash(req.body.password);
 
@@ -46,7 +46,7 @@ module.exports.update = function(req, res) {
             if (user.username != req.user.username) {
                 return res.status(401).end('Modifying other user');
             } else {
-                user.name = req.body.name ? req.body.name : user.name;
+                user.email = req.body.email ? req.body.email : user.emaile;
                 user.username = req.body.username ? req.body.username : user.username;
                 user.password = req.body.password ? user.generateHash(req.body.password) : user.password;
                 user.save();
