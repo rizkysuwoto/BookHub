@@ -100,16 +100,17 @@
         android:layout_alignStart="@+id/button_home_chats" />
 
     <ImageButton
+        android:id="@+id/button_home_logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/button_home_logout"
+        android:layout_alignLeft="@+id/textView3"
+        android:layout_alignStart="@+id/textView3"
+        android:layout_below="@+id/textView3"
+        android:layout_marginTop="42dp"
         android:minHeight="64dp"
         android:minWidth="64dp"
         android:nestedScrollingEnabled="false"
-        android:layout_marginTop="42dp"
-        android:layout_below="@+id/textView3"
-        android:layout_alignLeft="@+id/textView3"
-        android:layout_alignStart="@+id/textView3" />
+        android:onClick="onLogout" />
 
     <ImageButton
         android:layout_width="wrap_content"

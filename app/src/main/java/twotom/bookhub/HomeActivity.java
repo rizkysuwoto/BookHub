@@ -3,7 +3,23 @@ package twotom.bookhub;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.CookieHandler;
+import java.net.CookieManager;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -63,5 +79,28 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(myIntent);
             }
         });
+    }
+
+    public void onLogout(View view) {
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "http://bookhub-backend.herokuapp.com/logout";
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Intent myIntent = new Intent(HomeActivity.this, LoginActivity.class);
+                startActivity(myIntent);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("Error: ", error.getMessage());
+            }
+        });
+        queue.add(stringRequest);
+
+
+
     }
 }
