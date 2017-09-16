@@ -9,24 +9,23 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".BookSearchActivity">
 
-    <EditText
-        android:id="@+id/textfield_bookSearch_isbn"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="62dp"
-        android:hint="ISBN" />
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
+        <EditText
+            android:id="@+id/textfield_bookSearch_isbn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="ISBN" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Search"
-        android:id="@+id/button_bookSearch_search"
-        android:layout_marginTop="86dp"
-        android:layout_below="@+id/textfield_bookSearch_isbn"
-        android:layout_centerHorizontal="true" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Search"
+            android:id="@+id/button_bookSearch_search"
+            android:onClick="onSearch" />
+    </LinearLayout>
+
 </RelativeLayout>

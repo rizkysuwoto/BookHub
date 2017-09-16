@@ -31,7 +31,7 @@ public class HomeActivity extends AppCompatActivity {
         (findViewById(R.id.button_home_wishlist)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
                 // Start WishlistActivity.class
-                Intent myIntent = new Intent(HomeActivity.this, WishlistActivity.class);
+                Intent myIntent = new Intent(HomeActivity.this, WishListActivity.class);
                 startActivity(myIntent);
             }
         });

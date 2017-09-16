@@ -32,34 +32,6 @@ import java.net.CookieManager;
 public class LoginActivity extends AppCompatActivity {
 
     @Override
-    /* Demo Version
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        final DatabaseReference db = FirebaseDatabase.getInstance().getReference();
-
-        (findViewById(R.id.button_login)).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View arg0) {
-                String username = ((EditText) findViewById(R.id.text_login_username)).getText().toString();
-
-                db.child("users").child(username).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        UserManager um = new UserManager();
-                        um.setCurrentUser(dataSnapshot.getValue(User.class));
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-                Intent myIntent = new Intent(LoginActivity.this, HomeActivity.class);
-                startActivity(myIntent);
-            }
-        });
-    }
-    */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
@@ -77,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
             //TODO: handle error
         }
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "http://bookhub-backend.herokuapp.com/login";
+        String url = NetworkConfiguration.getURL() + "login";
         JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, url, requestBody, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject resp) {

@@ -15,14 +15,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,68 +39,35 @@ public class BookSearchResultActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_search_result);
-        RequestQueue queue = Volley.newRequestQueue(this);
-        final String ISBN = getIntent().getExtras().getString("ISBN");
 
-        String url = "https://openlibrary.org/api/books?bibkeys=ISBN:"+ISBN+"&format=json&jscmd=data";
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject resp) {
-                JSONObject b;
-                try {
-                    b = resp.getJSONObject("ISBN:"+ISBN);
-                } catch (JSONException e) {
-                    b = null;
-                }
-                if (b == null) {
-                    Toast.makeText(getApplicationContext(), "Book not found!",
-                            Toast.LENGTH_LONG).show();
-                } else {
-                    String title = b.optString("title");
-                    String publisher = b.optJSONArray("publishers").optJSONObject(0).optString("name");
-                    String author = b.optJSONArray("authors").optJSONObject(0).optString("name");
-                    String ISBN10 = b.optJSONObject("identifiers").optJSONArray("isbn_10").optString(0);
-                    String ISBN13 = b.optJSONObject("identifiers").optJSONArray("isbn_13").optString(0);
-                    String imgURL = b.optJSONObject("cover").optString("large");
+        Intent intent = getIntent();
 
-                    book.setAuthor(author);
-                    book.setTitle(title);
-                    book.setPublisher(publisher);
-                    book.setISBN10(ISBN10);
-                    book.setISBN13(ISBN13);
+        String title     = intent.getStringExtra("title");
+        String author    = intent.getStringExtra("author");
+        String publisher = intent.getStringExtra("publisher");
+        String ISBN10    = intent.getStringExtra("ISBN10");
+        String ISBN13    = intent.getStringExtra("ISBN13");
+        String imageURL  = intent.getStringExtra("Image URL");
 
-                    new DownloadImageTask((ImageView) findViewById(R.id.image_bookSearchResult_cover))
-                            .execute(imgURL);
-                    ((TextView) findViewById(R.id.text_bookSearchResult_author)).setText(author);
-                    ((TextView) findViewById(R.id.text_bookSearchResult_title)).setText(title);
-                    ((TextView) findViewById(R.id.text_bookSearchResult_publisher)).setText(publisher);
+        book.setTitle(title);
+        book.setAuthor(author);
+        book.setPublisher(publisher);
+        book.setISBN10(ISBN10);
+        book.setISBN13(ISBN13);
 
-                    (findViewById(R.id.button_bookSearchResult_wishlist)).setOnClickListener(new View.OnClickListener() {
-                        public void onClick(View arg0) {
-                            Intent myIntent = new Intent(BookSearchResultActivity.this, WishlistActivity.class);
-                            myIntent.putExtra("BOOK", book);
-                            startActivity(myIntent);
-                        }
-                    });
+        new DownloadImageTask((ImageView) findViewById(R.id.image_bookSearchResult_cover))
+                .execute(imageURL);
+        ((TextView) findViewById(R.id.text_bookSearchResult_author)).setText(author);
+        ((TextView) findViewById(R.id.text_bookSearchResult_title)).setText(title);
+        ((TextView) findViewById(R.id.text_bookSearchResult_publisher)).setText(publisher);
 
-                    (findViewById(R.id.button_bookSearchResult_sell)).setOnClickListener(new View.OnClickListener() {
-                        public void onClick(View arg0) {
-                            Intent myIntent = new Intent(BookSearchResultActivity.this, MyBooksActivity.class);
-                            myIntent.putExtra("BOOK", book);
-                            startActivity(myIntent);
-                        }
-                    });
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
+        (findViewById(R.id.button_bookSearchResult_sell)).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+                Intent myIntent = new Intent(BookSearchResultActivity.this, MyBooksActivity.class);
+                myIntent.putExtra("BOOK", book);
+                startActivity(myIntent);
             }
         });
-        //this actually queues up the async response with Volley
-        queue.add(jsObjRequest);
-
     }
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
@@ -125,6 +94,60 @@ public class BookSearchResultActivity extends AppCompatActivity {
             bmImage.setImageBitmap(result);
         }
     }
+
+    public void onAddToWishlist(View view) {
+        String username = new UserManager().getCurrentUser().getUsername();
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = NetworkConfiguration.getURL()
+                   + "wishList/" + username;
+
+        JSONObject requestBody = new JSONObject();
+        try {
+            requestBody.putOpt("isbn10", book.getISBN10());
+        }
+        catch (JSONException e) {
+            Log.e("Error", e.getMessage());
+        }
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,
+          url, requestBody, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    String message = response.getString("message");
+                    Toast.makeText(getBaseContext(), message,
+                        Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(
+                        BookSearchResultActivity.this, WishListActivity.class
+                    );
+                    finish();
+                }
+                catch (JSONException e) {
+                    Log.e("Error", e.getMessage());
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError e) {
+                NetworkResponse response = e.networkResponse;
+                if (e instanceof ServerError && response != null) {
+                    try {
+                        String message = new String(
+                            response.data,
+                            HttpHeaderParser.parseCharset(
+                                response.headers, "utf-8"
+                            )
+                        );
+                        Toast.makeText(getBaseContext(), message,
+                            Toast.LENGTH_LONG).show();
+                    }
+                    catch (Exception e1) {
+                        Log.e("Error", e1.getMessage());
+                    }
+                }
+            }
+        });
+        queue.add(request);
+    }
 }
-
-

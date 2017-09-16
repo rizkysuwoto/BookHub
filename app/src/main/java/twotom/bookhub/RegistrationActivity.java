@@ -31,24 +31,10 @@ public class RegistrationActivity extends AppCompatActivity {
         UserDatabase userDatabase = new UserDatabase(this);
         String username =
             ((EditText) findViewById(R.id.text_registration_username)).getText().toString();
-        if (!isUsernameValid(username, userDatabase)) {
-            return;
-        }
         String email =
             ((EditText) findViewById(R.id.text_registration_email)).getText().toString();
-        if (!isEmailValid(email)) {
-            return;
-        }
         String password =
             ((EditText) findViewById(R.id.text_registration_password)).getText().toString();
-        if (!isPasswordValid(password)) {
-            return;
-        }
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(password);
-        user.setEmail(email);
-        userDatabase.insertUser(user);
 
         JSONObject requestBody = new JSONObject();
         try {
@@ -59,7 +45,7 @@ public class RegistrationActivity extends AppCompatActivity {
             //TODO: handle error
         }
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "http://bookhub-backend.herokuapp.com/user";
+        String url = NetworkConfiguration.getURL() + "user";
         JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.PUT, url, requestBody, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject resp) {
