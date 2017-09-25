@@ -153,3 +153,35 @@ module.exports.getWishList = function(req, res) {
         });
     });
 }
+
+module.exports.removeFromWishList = function(req, res) {
+    if (!req.params.username) {
+        return res.status(400).end('Invalid input');
+    }
+
+    User.findOne({username: req.params.username}, function(err, user) {
+        if (!user) {
+            return res.status(400).end('User not found');
+        }
+
+        var isbnsToRemove = req.body.isbnsToRemove;
+        User.update(
+            {username: req.params.username},
+            {$pullAll: {wishList: isbnsToRemove}},
+            function(err, users) {
+                var removedCount = isbnsToRemove.length;
+                var bookWord = 'book' + (removedCount === 1 ? '' : 's');
+                if (err) {
+                    return res.status(400).end('Failed to remove ' + bookWord
+                                             + ' from your wish list');
+                }
+                res.writeHead(200, {'Content-Type': 'application/json'});
+                res.end(JSON.stringify({
+                    message: 'Successcully removed '
+                           + String(removedCount) + ' '
+                           + bookWord + ' from your wish list'
+                }));
+            }
+        );
+    });
+};

@@ -22,6 +22,7 @@ else {
         if (err) throw err;
     });
 }
+mongoose.Promise = require('bluebird');
 
 require('./config/passport')(passport);
 

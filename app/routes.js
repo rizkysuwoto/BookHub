@@ -12,6 +12,7 @@ module.exports = function(app, passport) {
     app.put('/user', users.create);
     app.post('/user/:id', isLoggedIn, users.update);
     app.post('/user/:username/wishList', users.addToWishList);
+    app.post('/user/:username/wishList/remove', users.removeFromWishList);
     app.delete('/user/:id', isLoggedIn, users.delete);
 
     app.post('/logout', function(req, res) {
