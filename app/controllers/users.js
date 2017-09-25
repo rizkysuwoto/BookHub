@@ -1,4 +1,7 @@
 var User = require('../models/user');
+var BookCache = require('../models/bookCache');
+var async = require('async');
+var request = require('request');
 
 module.exports = {};
 
@@ -15,6 +18,8 @@ module.exports.create = function(req, res) {
             newUser.email = req.body.email;
             newUser.username = req.body.username;
             newUser.password = newUser.generateHash(req.body.password);
+            newUser.wishList = [];
+            newUser.myBooks = [];
 
             newUser.save();
 
@@ -67,3 +72,84 @@ module.exports.delete = function(req, res) {
         res.end('Deleted')
     });
 };
+
+module.exports.addToWishList = function(req, res) {
+    if (!req.body.isbn10 || !req.params.username) {
+        return res.status(400).end('Invalid input');
+    }
+
+    User.findOne({username: req.params.username}, function(err, user) {
+        if (!user) {
+            return res.status(400).end('User not found');
+        }
+        var isbn10 = req.body.isbn10;
+        if (user.wishList.indexOf(isbn10) !== -1) {
+            return res.status(400).end('Already in your wish list');
+        }
+        user.wishList.push(isbn10);
+        user.save();
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify({
+            message: 'Book added to your wish list'
+        }));
+    });
+};
+
+
+module.exports.getWishList = function(req, res) {
+    if (!req.params.username) {
+        return res.status(400).end('Invalid input');
+    }
+
+    User.findOne({username: req.params.username}, function(err, user) {
+        if (!user) {
+            return res.status(400).end('User not found');
+        }
+
+        var tasks = user.wishList.map(function(isbn) {
+            return function(callback) {
+                BookCache.findOne({isbn10: isbn}, function(err, book) {
+                    if (err) {
+                        callback(err, {});
+                    }
+                    else if (!book) {
+                        console.log('Caching new book with ISBN', isbn);
+                        var url = 'https://openlibrary.org/api/books?'
+                                + 'bibkeys=ISBN:' + isbn
+                                + '&format=json&jscmd=data';
+                        request(url, function(err, res1, body) {
+                            if (!err && res1.statusCode == 200) {
+                                var book = JSON.parse(body)['ISBN:' + isbn];
+                                newBookCache = new BookCache()
+                                newBookCache.title = book.title;
+                                newBookCache.author = book.authors[0].name;
+                                newBookCache.isbn10 = isbn;
+                                newBookCache.save();
+                                callback(null, {
+                                    title: book.title,
+                                    author: book.authors[0].name,
+                                    isbn10: isbn,
+                                });
+                            }
+                            else {
+                                callback(err, {});
+                            }
+                        });
+                    }
+                    else {
+                        console.log('Book with ISBN', isbn, 'found in cache');
+                        callback(null, book);
+                    }
+                });
+
+            };
+        });
+
+        async.parallel(tasks, function(err, results) {
+            res.writeHead(200, {'Content-Type': 'application/json'});
+            res.end(JSON.stringify({
+                books: results
+            }));
+        });
+    });
+}

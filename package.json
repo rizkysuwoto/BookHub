@@ -19,6 +19,7 @@
     "mongoose": "latest",
     "morgan": "latest",
     "passport": "latest",
-    "passport-local": "latest"
+    "passport-local": "latest",
+    "request": "latest"
   }
 }

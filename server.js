@@ -10,10 +10,18 @@ var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var session      = require('express-session');
 
+var useLocalHost = true;
 
-mongoose.connect( process.env.MONGODB_URI || 'mongodb://localhost:12345/bookhub', function(err) {
-    if (err) throw err;
-});
+if (useLocalHost) {
+    mongoose.connect('mongodb://localhost/bookhub', function(err) {
+        if (err) throw err;
+    });
+}
+else {
+    mongoose.connect(process.env.MONGODB_URI, function(err) {
+        if (err) throw err;
+    });
+}
 
 require('./config/passport')(passport);
 
@@ -22,7 +30,7 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(session({ secret: 'verysecretsessionsecret' }));
+app.use(session({ secret: 'verysecretsessionsecret', resave: true, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());

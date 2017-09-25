@@ -1,4 +1,5 @@
 var users  = require('./controllers/users');
+var books = require('./controllers/books');
 
 module.exports = function(app, passport) {
 
@@ -7,8 +8,10 @@ module.exports = function(app, passport) {
     });
 
     app.get('/user/:id', isLoggedIn, users.read);
+    app.get('/user/:username/wishList', users.getWishList);
     app.put('/user', users.create);
     app.post('/user/:id', isLoggedIn, users.update);
+    app.post('/user/:username/wishList', users.addToWishList);
     app.delete('/user/:id', isLoggedIn, users.delete);
 
     app.post('/logout', function(req, res) {
