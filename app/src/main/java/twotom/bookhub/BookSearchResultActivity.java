@@ -100,7 +100,7 @@ public class BookSearchResultActivity extends AppCompatActivity {
 
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = NetworkConfiguration.getURL()
-                   + "wishList/" + username;
+                   + "user/" + username + "/wishList";
 
         JSONObject requestBody = new JSONObject();
         try {
