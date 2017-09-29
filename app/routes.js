@@ -1,4 +1,5 @@
 var users  = require('./controllers/users');
+var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn();
 
 module.exports = function(app, passport) {
 
@@ -7,11 +8,11 @@ module.exports = function(app, passport) {
     });
 
     app.get('/user/:id', isLoggedIn, users.read);
-    app.get('/user/:username/wishList', users.getWishList);
+    app.get('/wishList', ensureLoggedIn, users.getWishList);
     app.put('/user', users.create);
     app.post('/user/:id', isLoggedIn, users.update);
-    app.post('/user/:username/wishList', users.addToWishList);
-    app.post('/user/:username/wishList/remove', users.removeFromWishList);
+    app.post('/wishList', ensureLoggedIn, users.addToWishList);
+    app.post('/wishList/remove', ensureLoggedIn, users.removeFromWishList);
     app.delete('/user/:id', isLoggedIn, users.delete);
 
     app.post('/logout', function(req, res) {

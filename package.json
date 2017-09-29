@@ -21,6 +21,7 @@
     "passport": "latest",
     "passport-local": "latest",
     "request": "latest",
-    "bluebird": "latest"
+    "bluebird": "latest",
+    "connect-ensure-login": "latest"
   }
 }
