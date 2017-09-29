@@ -7,16 +7,16 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="twotom.bookhub.WishListActivity">
+    tools:context="twotom.bookhub.BooksListActivity">
 
     <ListView
-        android:id="@+id/listView_wishList"
+        android:id="@+id/listView_booksList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button_wishList"
+        android:layout_above="@+id/button_booksList"
         android:layout_alignParentTop="true" />
     <Button
-        android:id="@+id/button_wishList_edit"
+        android:id="@+id/button_booksList_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Edit"

@@ -60,14 +60,6 @@ public class BookSearchResultActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.text_bookSearchResult_author)).setText(author);
         ((TextView) findViewById(R.id.text_bookSearchResult_title)).setText(title);
         ((TextView) findViewById(R.id.text_bookSearchResult_publisher)).setText(publisher);
-
-        (findViewById(R.id.button_bookSearchResult_sell)).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View arg0) {
-                Intent myIntent = new Intent(BookSearchResultActivity.this, MyBooksActivity.class);
-                myIntent.putExtra("BOOK", book);
-                startActivity(myIntent);
-            }
-        });
     }
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
@@ -96,8 +88,16 @@ public class BookSearchResultActivity extends AppCompatActivity {
     }
 
     public void onAddToWishlist(View view) {
+        makeRequest("wishList");
+    }
+
+    public void onSellACopy(View view) {
+        makeRequest("myBooks");
+    }
+
+    private void makeRequest(String path) {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = NetworkConfiguration.getURL() + "wishList";
+        String url = NetworkConfiguration.getURL() + path;
 
         JSONObject requestBody = new JSONObject();
         try {
