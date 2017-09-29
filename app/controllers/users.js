@@ -1,4 +1,5 @@
 var User = require('../models/user');
+var Book = require('../models/book');
 var BookCache = require('../models/bookCache');
 var async = require('async');
 var request = require('request');
@@ -90,8 +91,8 @@ module.exports.addToWishList = function(req, res) {
     }));
 };
 
-module.exports.getWishList = function(req, res) {
-    var tasks = req.user.wishList.map(function(isbn) {
+module.exports.getList = function(req, res) {
+    var tasks = req.user[req.path.substring(1)].map(function(isbn) {
         return function(callback) {
             BookCache.findOne({isbn10: isbn}, function(err, book) {
                 if (err) {
@@ -152,10 +153,113 @@ module.exports.removeFromWishList = function(req, res) {
             }
             res.writeHead(200, {'Content-Type': 'application/json'});
             res.end(JSON.stringify({
-                message: 'Successcully removed '
+                message: 'Successfully removed '
                        + String(removedCount) + ' '
                        + bookWord + ' from your wish list'
             }));
         }
     );
 };
+
+module.exports.addToMyBooks = function(req, res) {
+    var isbn10 = req.body.isbn10;
+    if (!isbn10) {
+        return res.status(400).end('Invalid input');
+    }
+
+    var user = req.user;
+    async.series([
+        function(callback) {
+            if (user.myBooks.indexOf(isbn10) !== -1) {
+                return callback(new Error('Already in My Books'));
+            }
+            user.myBooks.push(isbn10);
+            user.save(function(err) {
+                if (err) {
+                    return callback(err);
+                }
+                callback(null);
+            });
+        },
+        function(callback) {
+            Book.findOne({'isbn10': isbn10}, function(err, book) {
+                if (err) {
+                    return callback(err);
+                }
+                if (book) {
+                    book.sellers.push(user._id);
+                    book.save(function(err) {
+                        if (err) {
+                            return callback(err);
+                        }
+                        callback(null);
+                    });
+                }
+                else {
+                    var newBook = new Book({
+                        isbn10: isbn10,
+                        sellers: [user._id],
+                    });
+                    newBook.save(function(err) {
+                        if (err) {
+                            return callback(err);
+                        }
+                        callback(null);
+                    });
+                }
+            });
+        },
+    ],
+    function(err) {
+        if (err) {
+            return res.status(400).end(err.toString());
+        }
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify({message: 'Book added to My Books'}));
+    });
+};
+
+module.exports.removeFromMyBooks = function(req, res) {
+    var isbnsToRemove = req.body.isbnsToRemove;
+    User.update(
+        {_id: req.user._id},
+        {$pullAll: {myBooks: isbnsToRemove}},
+        function(err, users) {
+            var removedCount = isbnsToRemove.length;
+            var bookWord = 'book' + (removedCount === 1 ? '' : 's');
+            if (err) {
+                return res.status(400).end('Failed to remove ' + bookWord
+                                         + ' from My Books');
+            }
+
+            // Now remove the seller from the list of sellers for these books
+            var tasks = isbnsToRemove.map(function(isbnToRemove) {
+                return function(callback) {
+                    Book.update(
+                        {isbn10: isbnToRemove},
+                        {$pull: {sellers: req.user._id}},
+                        function(err, book) {
+                            if (err) {
+                                return callback(err);
+                            }
+                            callback(null, book);
+                        }
+                    );
+                }
+            });
+
+            async.parallel(tasks, function(err) {
+                if (err) {
+                    return res.status(400).end(err.toString());
+                }
+                res.writeHead(200, {'Content-Type': 'application/json'});
+                res.end(JSON.stringify({
+                    message: 'Successfully removed '
+                           + String(removedCount) + ' '
+                           + bookWord + ' from My Books'
+                }));
+            });
+        }
+    );
+};
+
