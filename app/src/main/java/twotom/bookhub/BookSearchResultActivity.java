@@ -96,11 +96,8 @@ public class BookSearchResultActivity extends AppCompatActivity {
     }
 
     public void onAddToWishlist(View view) {
-        String username = new UserManager().getCurrentUser().getUsername();
-
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = NetworkConfiguration.getURL()
-                   + "user/" + username + "/wishList";
+        String url = NetworkConfiguration.getURL() + "wishList";
 
         JSONObject requestBody = new JSONObject();
         try {

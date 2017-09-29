@@ -53,11 +53,8 @@ public class WishListActivity extends AppCompatActivity {
         final WishListAdapter adapter = new WishListAdapter(this, items);
         listView.setAdapter(adapter);
 
-        String username = new UserManager().getCurrentUser().getUsername();
-
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = NetworkConfiguration.getURL()
-                   + "user/" + username + "/wishList";
+        String url = NetworkConfiguration.getURL() + "wishList";
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
           url, null, new Response.Listener<JSONObject>() {
@@ -120,11 +117,8 @@ public class WishListActivity extends AppCompatActivity {
         }
         // End editing
         else {
-            String username = new UserManager().getCurrentUser().getUsername();
-
             RequestQueue queue = Volley.newRequestQueue(this);
-            String url = NetworkConfiguration.getURL()
-                       + "user/" + username + "/wishList/remove";
+            String url = NetworkConfiguration.getURL() + "wishList/remove";
 
             JSONArray isbnsToRemove = new JSONArray();
             for (Integer indexToRemove : indexesToRemove) {
