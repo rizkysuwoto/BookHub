@@ -14,40 +14,44 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tap to upload new picture"
+            android:layout_gravity="center_horizontal"/>
+
+        <ImageView
+            android:id="@+id/profile_userPic"
+            android:background="@color/colorPrimaryDark"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_gravity="center_horizontal"
+            android:onClick="onChangePicture"/>
+
+
         <TextView
             android:id="@+id/textView_profile_username"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Username"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textSize="30sp" />
+        <TextView
+            android:id="@+id/textView_profile_email"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="30dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textSize="30sp"/>
-
-        <TextView
-            android:id="@+id/textView_profile_emailLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="Email"
-            android:textSize="24sp"/>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/editText_profile_email"
-            android:layout_marginBottom="30dp"/>
-
-        <TextView
-            android:id="@+id/textView_profile_passwordLabel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Password"
-            android:textSize="24sp"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/button_profile_password"
-            android:text="Change Password"
-            android:onClick="onChangePassword"/>
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textSize="24sp" />
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -61,14 +65,29 @@
             android:inputType="textPassword"
             android:hint="New Password"
             android:visibility="gone"
-            android:id="@+id/editText_profile_newPassword"
+            android:id="@+id/editText_profile_newPassword"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="Confirm New Password"
+            android:visibility="gone"
+            android:id="@+id/editText_profile_newPasswordConfirm"
             android:layout_marginBottom="30dp"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_profile_password"
+            android:text="Change Password"
+            android:onClick="onChangePassword"/>
     </LinearLayout>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="Save Changes"
+        android:onClick="onSubmit"
         android:layout_alignParentBottom="true"
-        android:text="Submit"
-        android:onClick="onSubmit"/>
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>

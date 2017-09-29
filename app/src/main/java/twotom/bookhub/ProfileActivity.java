@@ -14,9 +14,11 @@ public class ProfileActivity extends AppCompatActivity {
     private boolean isChangingPassword = false;
     private EditText oldPasswordView;
     private EditText newPasswordView;
+    private EditText newPasswordConfirmView;
     private Button passwordButton;
     private String oldPassword = "";
     private String newPassword = "";
+    private String newPasswordConfirm = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,12 +27,14 @@ public class ProfileActivity extends AppCompatActivity {
 
         TextView usernameView = (TextView)
             findViewById(R.id.textView_profile_username);
-        EditText emailView = (EditText)
+        TextView emailView = (TextView)
             findViewById(R.id.editText_profile_email);
         oldPasswordView = (EditText)
             findViewById(R.id.editText_profile_oldPassword);
         newPasswordView = (EditText)
             findViewById(R.id.editText_profile_newPassword);
+        newPasswordConfirmView = (EditText)
+            findViewById(R.id.editText_profile_newPasswordConfirm);
         passwordButton = (Button)
             findViewById(R.id.button_profile_password);
 
@@ -66,6 +70,20 @@ public class ProfileActivity extends AppCompatActivity {
                 newPassword = newPasswordView.getText().toString();
             }
         });
+
+        newPasswordConfirmView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence,
+                                          int i, int i1, int i2) { }
+            @Override
+            public void onTextChanged(CharSequence charSequence,
+                                      int i, int i1, int i2) { }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                newPasswordConfirm = newPasswordConfirmView.getText().toString();
+            }
+        });
     }
 
     public void onChangePassword(View view) {
@@ -74,13 +92,16 @@ public class ProfileActivity extends AppCompatActivity {
             passwordButton.setText("Cancel");
             oldPasswordView.setVisibility(View.VISIBLE);
             newPasswordView.setVisibility(View.VISIBLE);
+            newPasswordView.setVisibility(View.VISIBLE);
         }
         else {
             passwordButton.setText("Change Password");
             oldPasswordView.setVisibility(View.GONE);
             newPasswordView.setVisibility(View.GONE);
+            newPasswordConfirmView.setVisibility(View.GONE);
             oldPassword = "";
             newPassword = "";
+            newPasswordConfirm = "";
         }
     }
 

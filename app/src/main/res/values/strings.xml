@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">BookHub</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_view_profile">Profile</string>
 </resources>
