@@ -11,7 +11,7 @@ module.exports = function(app, passport) {
     app.get('/wishList', ensureLoggedIn, users.getList);
     app.get('/myBooks', ensureLoggedIn, users.getList);
     app.put('/user', users.create);
-    app.post('/user/:id', isLoggedIn, users.update);
+    app.post('/user', isLoggedIn, users.update);
     app.post('/wishList', ensureLoggedIn, users.addToWishList);
     app.post('/wishList/remove', ensureLoggedIn, users.removeFromWishList);
     app.post('/myBooks', ensureLoggedIn, users.addToMyBooks);

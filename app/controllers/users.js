@@ -19,6 +19,7 @@ module.exports.create = function(req, res) {
             newUser.email = req.body.email;
             newUser.username = req.body.username;
             newUser.password = newUser.generateHash(req.body.password);
+            newUser.picture = req.body.picture;
             newUser.wishList = [];
             newUser.myBooks = [];
 
@@ -47,24 +48,19 @@ module.exports.read = function(req, res) {
 };
 
 module.exports.update = function(req, res) {
-    User.findById(req.params.id, function(err, user) {
-        if (user) {
-            if (user.username != req.user.username) {
-                return res.status(401).end('Modifying other user');
-            } else {
-                user.email = req.body.email ? req.body.email : user.emaile;
-                user.username = req.body.username ? req.body.username : user.username;
-                user.password = req.body.password ? user.generateHash(req.body.password) : user.password;
-                user.save();
-
-                res.writeHead(200, {"Content-Type": "application/json"});
-                user = user.toObject();
-                delete user.password;
-                res.end(JSON.stringify(user));
-            }
-        } else {
-            return res.status(400).end('User not found');
+    var user = req.user;
+    user.email = req.body.email ? req.body.email : user.email;
+    user.username = req.body.username ? req.body.username : user.username;
+    user.password = req.body.password ? user.generateHash(req.body.password) : user.password;
+    user.picture = req.body.picture ? req.body.picture : user.picture;
+    user.save(function(err) {
+        if (err) {
+            return res.writeHead(400).end('Cannot update user');
         }
+        res.writeHead(200, {"Content-Type": "application/json"});
+        user = user.toObject();
+        delete user.password;
+        res.end(JSON.stringify(user));
     });
 };
 
