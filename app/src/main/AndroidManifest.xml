@@ -39,9 +39,6 @@
             android:name=".BookSearchResultActivity"
             android:label="Search Result" />
         <activity
-            android:name=".BooksForSaleActivity"
-            android:label="Books for Sale" />
-        <activity
             android:name=".BookForSaleActivity"
             android:label="Book for Sale" />
         <activity

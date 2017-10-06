@@ -10,47 +10,48 @@
     tools:context="twotom.bookhub.HomeActivity">
 
     <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:background="@drawable/ic_wishlist"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
         android:id="@+id/button_home_wishlist"
         android:minHeight="72dp"
         android:minWidth="72dp"
         android:nestedScrollingEnabled="false"
-        android:layout_marginLeft="72dp"
-        android:layout_marginStart="72dp"
-        android:layout_alignTop="@+id/button_home_my_books"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/textView5"
+        android:layout_alignEnd="@+id/textView5"
+        android:layout_marginTop="29dp" />
 
     <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:background="@drawable/ic_mybook"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
         android:id="@+id/button_home_my_books"
         android:minHeight="72dp"
         android:minWidth="72dp"
         android:nestedScrollingEnabled="false"
-        android:layout_marginRight="72dp"
-        android:layout_marginEnd="72dp"
-        android:layout_marginTop="72dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignTop="@+id/button_home_wishlist"
+        android:layout_toRightOf="@+id/button_home_wishlist"
+        android:layout_toEndOf="@+id/button_home_wishlist"
+        android:layout_marginLeft="70dp"
+        android:layout_marginStart="70dp" />
 
     <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:background="@drawable/ic_profile"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
         android:id="@+id/button_home_profile"
         android:minHeight="72dp"
         android:minWidth="72dp"
         android:nestedScrollingEnabled="false"
-        android:layout_marginTop="80dp"
-        android:layout_below="@+id/button_home_wishlist"
-        android:layout_alignLeft="@+id/button_home_wishlist"
-        android:layout_alignStart="@+id/button_home_wishlist" />
+        android:layout_centerVertical="true"
+        android:layout_alignRight="@+id/textView"
+        android:layout_alignEnd="@+id/textView" />
 
     <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:background="@drawable/ic_chat"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
         android:id="@+id/button_home_chats"
         android:minHeight="72dp"
         android:minWidth="72dp"
@@ -101,20 +102,23 @@
         android:layout_alignStart="@+id/button_home_chats" />
 
     <ImageButton
+        android:background="@drawable/ic_logout"
         android:id="@+id/button_home_logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:minHeight="72dp"
         android:minWidth="72dp"
         android:nestedScrollingEnabled="false"
         android:onClick="onLogout"
+        android:layout_marginRight="10dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:background="@drawable/ic_findbook"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
         android:id="@+id/button_home_find_books"
         android:minHeight="72dp"
         android:minWidth="72dp"
@@ -139,8 +143,8 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Find Books"
         android:id="@+id/textView6"
-        android:layout_alignTop="@+id/button_home_find_books"
-        android:layout_toLeftOf="@+id/button_home_find_books"
-        android:layout_toStartOf="@+id/button_home_find_books" />
+        android:layout_above="@+id/button_home_find_books"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
