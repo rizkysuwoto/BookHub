@@ -41,6 +41,7 @@ public class RegistrationActivity extends AppCompatActivity {
             requestBody.putOpt("email", email);
             requestBody.putOpt("username", username);
             requestBody.putOpt("password", password);
+            requestBody.putOpt("picture", "");
         } catch (JSONException e) {
             //TODO: handle error
         }

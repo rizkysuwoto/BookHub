@@ -12,6 +12,7 @@ public class User implements Serializable
     private String username;
     private String email;
     private String password;
+    private String picture;
     private List<Book> wishlist;
     private List<Book> myBooks;
     private int sellerRating;
@@ -51,6 +52,7 @@ public class User implements Serializable
     //-----------------------------------------------------
     //Getters and Setters
     //-----------------------------------------------------
+
     public String getUsername() {
         return username;
     }
@@ -97,5 +99,13 @@ public class User implements Serializable
 
     public List<Book> getMyBooks() {
         return myBooks;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
     }
 }

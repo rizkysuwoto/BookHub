@@ -55,15 +55,17 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(JSONObject resp) {
                 String username;
                 String email;
+                String picture;
                 try {
                     username = resp.getString("username");
                     email = resp.getString("email");
+                    picture = resp.getString("picture");
                     UserManager um = new UserManager();
                     User myUser = new User();
                     myUser.setUsername(username);
                     myUser.setEmail(email);
+                    myUser.setPicture(picture);
                     um.setCurrentUser(myUser);
-
                     Intent myIntent = new Intent(LoginActivity.this, HomeActivity.class);
                     startActivity(myIntent);
                 } catch (JSONException e) {
