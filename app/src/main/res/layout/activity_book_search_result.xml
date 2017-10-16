@@ -62,5 +62,12 @@
             android:text="Sell A Copy"
             android:onClick="onSellACopy" />
 
+        <Button
+            android:id="@+id/button_bookSearchResult_viewBookItems"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="View Sellers"
+            android:onClick="onViewBookItems" />
+
     </LinearLayout>
 </RelativeLayout>

@@ -18,8 +18,6 @@ public class BookForSale extends Book {
         setPublisher(book.getPublisher());
         setISBN10(book.getISBN10());
         setISBN13(book.getISBN13());
-        setCondition(book.getCondition());
-        setPrice(book.getPrice());
         this.seller = seller;
     }
 

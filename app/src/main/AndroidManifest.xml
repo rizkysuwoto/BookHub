@@ -44,7 +44,10 @@
         <activity
             android:name=".ViewProfileActivity"
             android:label="@string/title_activity_view_profile"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".BookItemsListActivity"
+            android:label="Book Items"/>
     </application>
 
 </manifest>

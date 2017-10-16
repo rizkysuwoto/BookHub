@@ -33,7 +33,7 @@ import org.json.JSONObject;
 
 // Super class for WishListActivity and MyBooksActivity
 public abstract class BooksListActivity extends AppCompatActivity {
-    private ArrayList<Book> items;
+    protected ArrayList<Book> items;
     private ArrayList<Integer> indexesToRemove;
     private ArrayList<CheckBox> checkBoxes;
     private boolean isEditing;
@@ -67,10 +67,7 @@ public abstract class BooksListActivity extends AppCompatActivity {
                     JSONArray array = response.getJSONArray("books");
                     for (int i = 0; i < array.length(); ++i) {
                         JSONObject object = array.getJSONObject(i);
-                        Book book = new Book();
-                        book.setAuthor(object.getString("author"));
-                        book.setTitle(object.getString("title"));
-                        book.setISBN10(object.getString("isbn10"));
+                        Book book = Utilities.jsonObjectToBook(object);
                         items.add(book);
                         adapter.notifyDataSetChanged();
                     }

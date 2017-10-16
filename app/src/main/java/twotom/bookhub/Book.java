@@ -1,20 +1,20 @@
 package twotom.bookhub;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 
 /**
  * Created by Thomas on 2017-04-14.
  */
-public class Book implements Serializable
-{
+public class Book implements Parcelable {
     private String title;
     private String author;
     private String publisher;
     private String ISBN10;
     private String ISBN13;
-
-    private String condition;
-    private double price;
+    private ArrayList<BookItem> items;
 
     public Book()
     {
@@ -23,8 +23,6 @@ public class Book implements Serializable
         publisher = "";
         ISBN10 = "";
         ISBN13 = "";
-        condition = "";
-        price = 0.00;
     }
 
     public Book(String title, String author, String publisher)
@@ -33,6 +31,28 @@ public class Book implements Serializable
         this.author = author;
         this.publisher = publisher;
     }
+
+    private Book(Parcel in) {
+        title = in.readString();
+        author = in.readString();
+        publisher = in.readString();
+        ISBN10 = in.readString();
+        ISBN13 = in.readString();
+        items = in.readArrayList(BookItem.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<Book> CREATOR = new
+      Parcelable.Creator<Book>() {
+        @Override
+        public Book createFromParcel(Parcel parcel) {
+            return new Book(parcel);
+        }
+
+        @Override
+        public Book[] newArray(int size) {
+            return new Book[0];
+        }
+    };
 
     //-----------------------------------------------------
     // Getters and Setters
@@ -78,20 +98,12 @@ public class Book implements Serializable
         this.ISBN13 = ISBN13;
     }
 
-    public String getCondition() {
-        return condition;
+    public ArrayList<BookItem> getItems() {
+        return items;
     }
 
-    public void setCondition(String condition) {
-        this.condition = condition;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
+    public void setItems(ArrayList<BookItem> items) {
+        this.items = items;
     }
 
     @Override
@@ -101,5 +113,20 @@ public class Book implements Serializable
                 "publisher: " + publisher + "\n" +
                 "ISBN10: " + ISBN10 + "\n" +
                 "ISBN13: " + ISBN13;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(title);
+        parcel.writeString(author);
+        parcel.writeString(publisher);
+        parcel.writeString(ISBN10);
+        parcel.writeString(ISBN13);
+        parcel.writeList(items);
     }
 }

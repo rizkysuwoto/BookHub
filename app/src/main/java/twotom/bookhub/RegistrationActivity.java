@@ -28,7 +28,6 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     public void onSubmit(View view) {
-        UserDatabase userDatabase = new UserDatabase(this);
         String username =
             ((EditText) findViewById(R.id.text_registration_username)).getText().toString();
         String email =
@@ -70,41 +69,5 @@ public class RegistrationActivity extends AppCompatActivity {
         queue.add(jsObjRequest);
 
 
-    }
-
-    private boolean isUsernameValid(String username, UserDatabase database) {
-        if (username.isEmpty()) {
-            Toast.makeText(getBaseContext(), "Username cannot be empty",
-                Toast.LENGTH_LONG).show();
-            return false;
-        }
-        if (database.userExists(username)) {
-            Toast.makeText(
-                getBaseContext(),
-                "Username " + username + " already exists",
-                Toast.LENGTH_LONG
-            ).show();
-            return false;
-        }
-        return true;
-    }
-
-    private boolean isPasswordValid(String password) {
-        if (password.isEmpty()) {
-            Toast.makeText(getBaseContext(), "Password must not be empty",
-                Toast.LENGTH_LONG).show();
-            return false;
-        }
-        return true;
-    }
-
-    private boolean isEmailValid(String email) {
-        final String pattern = "\\w+@\\w+\\.\\w+";
-        if (!Pattern.matches(pattern, email)) {
-            Toast.makeText(getBaseContext(), "Invalid email",
-                Toast.LENGTH_LONG).show();
-            return false;
-        }
-        return true;
     }
 }
