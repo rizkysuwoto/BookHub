@@ -1,4 +1,5 @@
 var users  = require('./controllers/users');
+var books = require('./controllers/books');
 var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn();
 
 module.exports = function(app, passport) {
@@ -10,6 +11,7 @@ module.exports = function(app, passport) {
     app.get('/user/:id', isLoggedIn, users.read);
     app.get('/wishList', ensureLoggedIn, users.getList);
     app.get('/myBooks', ensureLoggedIn, users.getList);
+    app.get('/search/:isbn', books.searchBook);
     app.put('/user', users.create);
     app.post('/user', isLoggedIn, users.update);
     app.post('/wishList', ensureLoggedIn, users.addToWishList);

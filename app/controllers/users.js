@@ -1,6 +1,6 @@
 var User = require('../models/user');
 var Book = require('../models/book');
-var BookCache = require('../models/bookCache');
+var books = require('./books.js');
 var async = require('async');
 var request = require('request');
 
@@ -90,40 +90,7 @@ module.exports.addToWishList = function(req, res) {
 module.exports.getList = function(req, res) {
     var tasks = req.user[req.path.substring(1)].map(function(isbn) {
         return function(callback) {
-            BookCache.findOne({isbn10: isbn}, function(err, book) {
-                if (err) {
-                    callback(err);
-                }
-                else if (!book) {
-                    console.log('Caching new book with ISBN', isbn);
-                    var url = 'https://openlibrary.org/api/books?'
-                            + 'bibkeys=ISBN:' + isbn
-                            + '&format=json&jscmd=data';
-                    request(url, function(err, res1, body) {
-                        if (!err && res1.statusCode == 200) {
-                            var book = JSON.parse(body)['ISBN:' + isbn];
-                            newBookCache = new BookCache()
-                            newBookCache.title = book.title;
-                            newBookCache.author = book.authors[0].name;
-                            newBookCache.isbn10 = isbn;
-                            newBookCache.save();
-                            callback(null, {
-                                title: book.title,
-                                author: book.authors[0].name,
-                                isbn10: isbn,
-                            });
-                        }
-                        else {
-                            callback(err);
-                        }
-                    });
-                }
-                else {
-                    console.log('Book with ISBN', isbn, 'found in cache');
-                    callback(null, book);
-                }
-            });
-
+            books.getBook(isbn, callback);
         };
     });
 
@@ -183,7 +150,11 @@ module.exports.addToMyBooks = function(req, res) {
                     return callback(err);
                 }
                 if (book) {
-                    book.sellers.push(user._id);
+                    book.items.push({
+                        seller: user.username,
+                        condition: '',
+                        price: 0,
+                    });
                     book.save(function(err) {
                         if (err) {
                             return callback(err);
@@ -192,16 +163,7 @@ module.exports.addToMyBooks = function(req, res) {
                     });
                 }
                 else {
-                    var newBook = new Book({
-                        isbn10: isbn10,
-                        sellers: [user._id],
-                    });
-                    newBook.save(function(err) {
-                        if (err) {
-                            return callback(err);
-                        }
-                        callback(null);
-                    });
+                    callback(new Error('Book has not been cached'));
                 }
             });
         },
@@ -228,12 +190,13 @@ module.exports.removeFromMyBooks = function(req, res) {
                                          + ' from My Books');
             }
 
-            // Now remove the seller from the list of sellers for these books
+            // Now remove the seller, price, condition information from the list
+            // of items for these books
             var tasks = isbnsToRemove.map(function(isbnToRemove) {
                 return function(callback) {
                     Book.update(
                         {isbn10: isbnToRemove},
-                        {$pull: {sellers: req.user._id}},
+                        {$pull: {items: {seller: req.user.username}}},
                         function(err, book) {
                             if (err) {
                                 return callback(err);
