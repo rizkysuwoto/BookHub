@@ -10,8 +10,8 @@
 
     <ImageButton
         android:id="@+id/button_home_logout"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
@@ -25,8 +25,8 @@
 
     <ImageButton
         android:id="@+id/button_home_find_books"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
@@ -38,13 +38,12 @@
         app:layout_constraintRight_toRightOf="parent"/>
 
     <LinearLayout
-        android:layout_width="85dp"
-        android:layout_height="107dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         android:id="@+id/linearLayout3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/linearLayout5"
         app:layout_constraintLeft_toLeftOf="parent">
 
@@ -72,10 +71,10 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="85dp"
-        android:layout_height="107dp"
-        android:orientation="vertical"
         android:id="@+id/linearLayout5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:layout_constraintTop_toTopOf="@+id/linearLayout3"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/linearLayout3">
@@ -105,13 +104,14 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="85dp"
-        android:layout_height="107dp"
-        android:orientation="vertical"
         android:id="@+id/linearLayout2"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-        app:layout_constraintBottom_toTopOf="@+id/button_home_logout"
-        app:layout_constraintLeft_toLeftOf="@+id/linearLayout3">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintRight_toRightOf="@+id/linearLayout3"
+        app:layout_constraintLeft_toLeftOf="@+id/linearLayout3"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout6"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
         <ImageButton
             android:id="@+id/button_home_profile"
@@ -138,16 +138,17 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="85dp"
-        android:layout_height="107dp"
-        android:orientation="vertical"
         android:id="@+id/linearLayout4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:layout_constraintTop_toTopOf="@+id/linearLayout2"
+        app:layout_constraintRight_toRightOf="@+id/linearLayout5"
         app:layout_constraintLeft_toLeftOf="@+id/linearLayout5">
 
         <ImageButton
             android:id="@+id/button_home_chats"
-            android:layout_width="match_parent"
+            android:layout_width="85dp"
             android:layout_height="85dp"
             android:background="@drawable/ic_chat"
             android:minHeight="72dp"
@@ -167,6 +168,33 @@
             tools:layout_editor_absoluteX="226dp"
             tools:layout_editor_absoluteY="285dp"/>
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintRight_toRightOf="@+id/linearLayout2"
+        app:layout_constraintLeft_toLeftOf="@+id/linearLayout2"
+        app:layout_constraintBottom_toTopOf="@+id/button_home_logout"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+        <ImageButton
+            android:id="@+id/button_home_transactions"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            android:src="@color/colorPrimaryDark"/>
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Transactions"
+            android:textAlignment="center"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="18sp"/>
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
