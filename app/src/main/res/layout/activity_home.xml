@@ -185,7 +185,12 @@
             android:id="@+id/button_home_transactions"
             android:layout_width="85dp"
             android:layout_height="85dp"
-            android:src="@color/colorPrimaryDark"/>
+            android:background="@drawable/ic_transactions"
+            android:minHeight="72dp"
+            android:minWidth="72dp"
+            android:nestedScrollingEnabled="false"
+            tools:layout_editor_absoluteX="212dp"
+            tools:layout_editor_absoluteY="192dp"/>
 
         <TextView
             android:id="@+id/textView5"
