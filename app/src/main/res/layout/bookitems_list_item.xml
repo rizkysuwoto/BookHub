@@ -35,4 +35,14 @@
         tools:layout_editor_absoluteY="56dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
+
+    <Button
+        android:id="@+id/button_bookItemsListItem_requestTransaction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="0dp"
+        android:text="Request Transaction"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_bookItemsListItem_condition"/>
 </android.support.constraint.ConstraintLayout>

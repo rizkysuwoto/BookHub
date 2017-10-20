@@ -48,6 +48,12 @@
         <activity
             android:name=".BookItemsListActivity"
             android:label="Book Items"/>
+        <activity
+            android:name=".TransactionHistoryActivity"
+            android:label="Transaction History"/>
+        <activity
+            android:name=".TransactionActivity"
+            android:label="Transaction"/>
     </application>
 
 </manifest>

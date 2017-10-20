@@ -74,7 +74,8 @@ final class Utilities {
                 list.add(new BookItem(
                     object.getString("seller"),
                     object.getString("condition"),
-                    object.getDouble("price")
+                    object.getDouble("price"),
+                    !object.getBoolean("isTransactionRequested")
                 ));
             }
             catch (Exception e) {

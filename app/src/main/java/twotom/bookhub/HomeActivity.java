@@ -103,4 +103,9 @@ public class HomeActivity extends AppCompatActivity {
 
 
     }
+
+    public void onTransaction(View view) {
+        Intent intent = new Intent(this, TransactionHistoryActivity.class);
+        startActivity(intent);
+    }
 }

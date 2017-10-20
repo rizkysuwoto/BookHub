@@ -7,17 +7,21 @@ class BookItem implements Parcelable {
     private String seller;
     private String condition;
     private double price;
+    private boolean canRequestTransaction;
 
-    BookItem(String seller, String condition, double price) {
+    BookItem(String seller, String condition, double price,
+      boolean canRequestTransaction) {
         this.seller = seller;
         this.condition = condition;
         this.price = price;
+        this.canRequestTransaction = canRequestTransaction;
     }
 
     private BookItem(Parcel in) {
         seller = in.readString();
         condition = in.readString();
         price = in.readDouble();
+        canRequestTransaction = in.readByte() != 0;
     }
 
     public static final Parcelable.Creator<BookItem> CREATOR = new
@@ -45,6 +49,14 @@ class BookItem implements Parcelable {
         return price;
     }
 
+    boolean getCanRequestTransaction() {
+        return canRequestTransaction;
+    }
+
+    void setCanRequestTransaction(boolean canRequestTransaction) {
+        this.canRequestTransaction = canRequestTransaction;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -55,5 +67,6 @@ class BookItem implements Parcelable {
         parcel.writeString(seller);
         parcel.writeString(condition);
         parcel.writeDouble(price);
+        parcel.writeByte((byte) (canRequestTransaction ? 1 : 0));
     }
 }

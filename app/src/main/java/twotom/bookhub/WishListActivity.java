@@ -2,9 +2,12 @@ package twotom.bookhub;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import java.util.ArrayList;
 
 public class WishListActivity extends BooksListActivity {
     @Override
@@ -27,8 +30,20 @@ public class WishListActivity extends BooksListActivity {
                 intent.putParcelableArrayListExtra(
                     "bookItems", book.getItems()
                 );
-                startActivity(intent);
+                intent.putExtra("isbn10", book.getISBN10());
+                startActivityForResult(intent, i);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,
+      Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            ArrayList<BookItem> bookItems =
+                data.getParcelableArrayListExtra("bookItems");
+            items.get(requestCode).setItems(bookItems);
+        }
     }
 }

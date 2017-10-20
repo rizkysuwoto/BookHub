@@ -86,6 +86,7 @@ public class BookSearchResultActivity extends AppCompatActivity {
     public void onViewBookItems(View view) {
         Intent intent = new Intent(this, BookItemsListActivity.class);
         intent.putParcelableArrayListExtra("bookItems", book.getItems());
+        intent.putExtra("isbn10", book.getISBN10());
         startActivity(intent);
     }
 }

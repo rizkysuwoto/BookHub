@@ -189,6 +189,7 @@
             android:minHeight="72dp"
             android:minWidth="72dp"
             android:nestedScrollingEnabled="false"
+            android:onClick="onTransaction"
             tools:layout_editor_absoluteX="212dp"
             tools:layout_editor_absoluteY="192dp"/>
 
