@@ -223,6 +223,23 @@ module.exports.removeFromMyBooks = function(req, res) {
     );
 };
 
+module.exports.editBookForSale = async (req, res) => {
+    try {
+        await Book.update(
+            {title: req.body.title, 'items.seller': req.user.username},
+            {$set: {
+                'items.$.price': req.body.price,
+                'items.$.condition': req.body.condition
+            }}
+        );
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify({message: 'Update successful'}));
+    }
+    catch (err) {
+        res.status(400).end(err.toString());
+    }
+};
+
 async function getSellerRating(username) {
     const sellerRatings = await
         Transaction.find({seller: username}, {sellerRating: 1});

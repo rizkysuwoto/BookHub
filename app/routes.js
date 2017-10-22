@@ -21,6 +21,7 @@ module.exports = function(app, passport) {
     app.post('/wishList/remove', ensureLoggedIn, users.removeFromWishList);
     app.post('/myBooks', ensureLoggedIn, users.addToMyBooks);
     app.post('/myBooks/remove', ensureLoggedIn, users.removeFromMyBooks);
+    app.post('/myBooks/edit', ensureLoggedIn, users.editBookForSale);
     app.post('/requestTransaction', ensureLoggedIn, users.requestTransaction);
     app.post('/approveTransaction', ensureLoggedIn, users.approveTransaction);
     app.post('/rateUser', ensureLoggedIn, users.rateUser);
