@@ -12,12 +12,17 @@ module.exports = function(app, passport) {
     app.get('/wishList', ensureLoggedIn, users.getList);
     app.get('/myBooks', ensureLoggedIn, users.getList);
     app.get('/search/:isbn', books.searchBook);
+    app.get('/transactionHistory', ensureLoggedIn, users.getTransactionHistory);
+    app.get('/transaction/:id', ensureLoggedIn, users.getTransaction);
     app.put('/user', users.create);
     app.post('/user', isLoggedIn, users.update);
     app.post('/wishList', ensureLoggedIn, users.addToWishList);
     app.post('/wishList/remove', ensureLoggedIn, users.removeFromWishList);
     app.post('/myBooks', ensureLoggedIn, users.addToMyBooks);
     app.post('/myBooks/remove', ensureLoggedIn, users.removeFromMyBooks);
+    app.post('/requestTransaction', ensureLoggedIn, users.requestTransaction);
+    app.post('/approveTransaction', ensureLoggedIn, users.approveTransaction);
+    app.post('/rateUser', ensureLoggedIn, users.rateUser);
     app.delete('/user/:id', isLoggedIn, users.delete);
 
     app.post('/logout', function(req, res) {

@@ -1,4 +1,5 @@
 var Book = require('../models/book');
+var Transaction = require('../models/transaction');
 var request = require('request');
 var async = require('async');
 
@@ -56,7 +57,6 @@ function cacheBook(isbn, callback) {
             request.defaults({encoding: null})(
               imageURL, function(err, res, body) {
                 if (!err && res.statusCode == 200) {
-                    console.log('Body: ', body);
                     var buffer = new Buffer(body);
                     newBook.thumbnail = buffer.toString('base64');
                 }
@@ -89,14 +89,41 @@ function getBook(isbn, callback) {
     });
 }
 
-module.exports.getBook = getBook;
-
-module.exports.searchBook = function(req, res) {
-    getBook(req.params.isbn, function(err, book) {
-        if (err) {
-            return res.status(400).end(err.toString());
-        }
-        res.writeHead(200, {"Content-Type": "application/json"});
-        res.end(JSON.stringify(book));
+function getBookAsync(isbn) {
+    return new Promise((resolve, reject) => {
+        getBook(isbn, (err, newBook) => {
+            if (err) {
+                return reject(err);
+            }
+            resolve(newBook);
+        });
     });
+};
+
+async function getBookCheckTransaction(isbn, username) {
+    var book = await getBookAsync(isbn);
+    book.items = await Promise.all(book.items.map(async item => {
+        var transaction = await Transaction.findOne(
+            {buyer: username, book: book._id}
+        );
+        item.isTransactionRequested = transaction ? true : false;
+        return item;
+    }));
+    return book;
+};
+
+module.exports.getBookCheckTransaction = getBookCheckTransaction;
+
+module.exports.searchBook = async (req, res) => {
+    var user = req.user;
+    try {
+        var book = await getBookCheckTransaction(
+            req.params.isbn, user.username
+        );
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify(book));
+    }
+    catch (err) {
+        res.status(400).end(err.toString());
+    }
 };

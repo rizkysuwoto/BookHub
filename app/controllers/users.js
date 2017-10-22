@@ -1,5 +1,6 @@
 var User = require('../models/user');
 var Book = require('../models/book');
+var Transaction = require('../models/transaction');
 var books = require('./books.js');
 var async = require('async');
 var request = require('request');
@@ -87,20 +88,20 @@ module.exports.addToWishList = function(req, res) {
     }));
 };
 
-module.exports.getList = function(req, res) {
-    var tasks = req.user[req.path.substring(1)].map(function(isbn) {
-        return function(callback) {
-            books.getBook(isbn, callback);
-        };
-    });
-
-    async.parallel(tasks, function(err, results) {
+module.exports.getList = async (req, res) => {
+    var user = req.user;
+    try {
+        var promises = req.user[req.path.substring(1)].map(async isbn => {
+            return await books.getBookCheckTransaction(isbn, user.username);
+        });
+        var results = await Promise.all(promises);
         res.writeHead(200, {'Content-Type': 'application/json'});
-        res.end(JSON.stringify({
-            books: results
-        }));
-    });
-}
+        res.end(JSON.stringify({books: results}));
+    }
+    catch (err) {
+        res.status(400).end(err.toString());
+    }
+};
 
 module.exports.removeFromWishList = function(req, res) {
     var isbnsToRemove = req.body.isbnsToRemove;
@@ -222,3 +223,117 @@ module.exports.removeFromMyBooks = function(req, res) {
     );
 };
 
+module.exports.getTransactionHistory = async (req, res) => {
+    const username = req.user.username;
+    try {
+        const transactions = await Transaction.find({
+            $or: [{seller: username}, {buyer: username}]
+        });
+        const values = await Promise.all(transactions.map(async transaction => {
+            const book = await Book.findById(transaction.book, {title: 1});
+            return {
+                id: transaction._id.toString(),
+                isSeller: transaction.seller === username,
+                tradedWith: transaction.getTradedWith(username),
+                bookTitle: book.title,
+                requestMessage: transaction.getRequestMessage(username),
+                approvalMessage: transaction.getApprovalMessage(username),
+            };
+        }));
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify({transactions: values}));
+    }
+    catch (err) {
+        res.status(400).end(err.toString());
+    }
+};
+
+module.exports.getTransaction = async (req, res) => {
+    const username = req.user.username;
+    try {
+        const transaction = await Transaction.findById(req.params.id);
+        const book = await Book.findById(
+            transaction.book, {_id: 0, thumbnail: 1, author: 1, publisher: 1}
+        );
+        const value = {
+            tradedWithRating: transaction.getTradedWithRating(username),
+            tradedWith: transaction.getTradedWith(username),
+            book: book,
+            dateRequested: transaction.getDateRequestedString(),
+            dateApproved: transaction.getDateApprovedString(),
+            approved: transaction.approved,
+            canApprove: transaction.canApprove(username),
+        };
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify(value));
+    }
+    catch (err) {
+        console.log(err);
+        res.status(400).end(err.toString());
+    }
+};
+
+module.exports.requestTransaction = async (req, res) => {
+    try {
+        const book = await Book.findOne({isbn10: req.body.isbn10}, {_id: 1});
+        const transaction = new Transaction({
+            seller: req.body.seller,
+            buyer: req.user.username,
+            book: book._id,
+            sellerRating: -1,
+            buyerRating: -1,
+            approved: false,
+            dateRequested: new Date(),
+        });
+        await transaction.save();
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify({message: 'Transaction requested'}));
+    }
+    catch (err) {
+        res.status(400).end(err.toString());
+    }
+};
+
+module.exports.approveTransaction = async (req, res) => {
+    try {
+        await Transaction.update(
+            {_id: req.body.id},
+            {$set: {approved: true, dateApproved: new Date()}}
+        );
+        const transaction = await Transaction.findById(req.body.id);
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify({
+            message: 'Transaction approved',
+            dateApproved: transaction.getDateApprovedString(),
+        }));
+    }
+    catch (err) {
+        console.log(err);
+        res.status(400).end(err.toString());
+    }
+};
+
+module.exports.rateUser = async (req, res) => {
+    const user = req.user;
+    try {
+        var property;
+        var ratedPerson;
+        const transaction = await Transaction.findById(req.body.id);
+        if (req.user.username === transaction.seller) {
+            updatedRating = user.buyer;
+            property = 'buyerRating';
+        }
+        else {
+            updatedRating = user.seller;
+            property = 'sellerRating';
+        }
+        transaction[property] = req.body.rating;
+        await transaction.save();
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify({message: 'Rating updated'}));
+    }
+    catch (err) {
+        console.log(err);
+        res.status(400).end(err.toString());
+    }
+};
