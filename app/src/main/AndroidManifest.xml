@@ -54,6 +54,9 @@
         <activity
             android:name=".TransactionActivity"
             android:label="Transaction"/>
+        <activity
+            android:name=".EditBookForSaleActivity"
+            android:label="Edit Book For Sale"/>
     </application>
 
 </manifest>
