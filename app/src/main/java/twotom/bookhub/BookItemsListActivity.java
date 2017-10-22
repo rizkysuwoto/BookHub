@@ -121,8 +121,8 @@ public class BookItemsListActivity extends AppCompatActivity {
             }
 
             usernameView.setText(item.getSeller());
-            priceView.setText(Double.toString(item.getPrice()));
-            conditionView.setText(item.getCondition());
+            priceView.setText("$" + item.getPrice());
+            conditionView.setText("Condition: " + item.getCondition());
             return view;
         }
     }
