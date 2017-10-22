@@ -318,7 +318,6 @@ module.exports.getTransaction = async (req, res) => {
         res.end(JSON.stringify(value));
     }
     catch (err) {
-        console.log(err);
         res.status(400).end(err.toString());
     }
 };
@@ -358,7 +357,6 @@ module.exports.approveTransaction = async (req, res) => {
         }));
     }
     catch (err) {
-        console.log(err);
         res.status(400).end(err.toString());
     }
 };
@@ -383,7 +381,6 @@ module.exports.rateUser = async (req, res) => {
         res.end(JSON.stringify({message: 'Rating updated'}));
     }
     catch (err) {
-        console.log(err);
         res.status(400).end(err.toString());
     }
 };
