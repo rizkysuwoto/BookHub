@@ -223,6 +223,56 @@ module.exports.removeFromMyBooks = function(req, res) {
     );
 };
 
+async function getSellerRating(username) {
+    const sellerRatings = await
+        Transaction.find({seller: username}, {sellerRating: 1});
+    const validRatings =
+        sellerRatings.map(transaction => transaction.sellerRating)
+                     .filter(rating => rating !== -1);
+    if (validRatings.length === 0) {
+        return -1;
+    }
+    return validRatings.reduce((x, y) => x + y, 0)/validRatings.length;
+}
+
+async function getBuyerRating(username) {
+    const buyerRatings = await
+        Transaction.find({buyer: username}, {buyerRating: 1});
+    const validRatings =
+        buyerRatings.map(transaction => transaction.buyerRating)
+                    .filter(rating => rating !== -1);
+    if (validRatings.length === 0) {
+        return -1;
+    }
+    return validRatings.reduce((x, y) => x + y, 0)/validRatings.length;
+}
+
+module.exports.getProfile = async (req, res) => {
+    const username = req.params.username;
+    try {
+        const user = await User.findOne({username: username});
+        const [wishList, inventory, sellerRating, buyerRating] =
+          await Promise.all([
+            books.isbnsToTitles(user.wishList),
+            books.isbnsToTitles(user.myBooks),
+            getSellerRating(username),
+            getBuyerRating(username),
+        ]);
+        const value = {
+            profilePicture: user.picture,
+            wishList: wishList,
+            inventory: inventory,
+            sellerRating: sellerRating,
+            buyerRating: buyerRating,
+        };
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify(value));
+    }
+    catch (err) {
+        res.status(400).end(err.toString());
+    }
+};
+
 module.exports.getTransactionHistory = async (req, res) => {
     const username = req.user.username;
     try {

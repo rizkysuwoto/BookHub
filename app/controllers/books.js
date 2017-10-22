@@ -114,6 +114,14 @@ async function getBookCheckTransaction(isbn, username) {
 
 module.exports.getBookCheckTransaction = getBookCheckTransaction;
 
+module.exports.isbnsToTitles = async isbns => {
+    return Promise.all(isbns.map(async isbn => {
+        const book = await
+            Book.findOne({$or: [{isbn10: isbn}, {isbn13: isbn}]});
+        return book.title;
+    }));
+};
+
 module.exports.searchBook = async (req, res) => {
     var user = req.user;
     try {

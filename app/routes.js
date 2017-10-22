@@ -14,6 +14,7 @@ module.exports = function(app, passport) {
     app.get('/search/:isbn', books.searchBook);
     app.get('/transactionHistory', ensureLoggedIn, users.getTransactionHistory);
     app.get('/transaction/:id', ensureLoggedIn, users.getTransaction);
+    app.get('/profile/:username', users.getProfile);
     app.put('/user', users.create);
     app.post('/user', isLoggedIn, users.update);
     app.post('/wishList', ensureLoggedIn, users.addToWishList);
