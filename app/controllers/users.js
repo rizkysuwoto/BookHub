@@ -283,6 +283,7 @@ module.exports.getProfile = async (req, res) => {
         ]);
         const value = {
             profilePicture: user.profilePicture,
+            email: user.email,
             wishList: wishList,
             inventory: inventory,
             sellerRating: sellerRating,
