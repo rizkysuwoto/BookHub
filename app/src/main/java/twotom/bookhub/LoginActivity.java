@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
                 try {
                     username = resp.getString("username");
                     email = resp.getString("email");
-                    picture = resp.getString("picture");
+                    picture = resp.getString("profilePicture");
                     UserManager um = new UserManager();
                     User myUser = new User();
                     myUser.setUsername(username);
