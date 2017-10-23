@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -25,6 +24,7 @@ import java.util.ArrayList;
 
 public class ViewProfileActivity extends AppCompatActivity {
     private TextView usernameView;
+    private TextView emailView;
     private ImageView profilePictureView;
     private RatingBar sellerRatingBar;
     private RatingBar buyerRatingBar;
@@ -38,8 +38,10 @@ public class ViewProfileActivity extends AppCompatActivity {
 
         usernameView = (TextView)
             findViewById(R.id.textView_viewProfile_username);
+        emailView = (TextView)
+            findViewById(R.id.textView_viewProfile_email);
         profilePictureView = (ImageView)
-            findViewById(R.id.image_viewProfile_profilePicture);
+            findViewById(R.id.imageView_viewProfile_profilePicture);
         sellerRatingBar = (RatingBar)
             findViewById(R.id.ratingBar_viewProfile_sellerRating);
         buyerRatingBar = (RatingBar)
@@ -63,6 +65,8 @@ public class ViewProfileActivity extends AppCompatActivity {
                 try {
                     String profilePicture =
                         response.getString("profilePicture");
+                    String email =
+                        response.getString("email");
                     JSONArray wishListArray =
                         response.getJSONArray("wishList");
                     JSONArray inventoryArray =
@@ -95,6 +99,7 @@ public class ViewProfileActivity extends AppCompatActivity {
                     profilePictureView.setImageBitmap(
                         Utilities.stringToBitmap(profilePicture)
                     );
+                    emailView.setText(email);
                     sellerRatingBar.setRating((float) sellerRating);
                     buyerRatingBar.setRating((float) buyerRating);
                 }
