@@ -21,7 +21,7 @@ public class MyBooksActivity extends BooksListActivity {
             public void onItemClick(AdapterView<?> adapterView, View view,
               int i, long l) {
                 Intent intent = new Intent(
-                    MyBooksActivity.this, EditBookForSaleActivity.class
+                    MyBooksActivity.this, EditBookItemActivity.class
                 );
                 Book book = items.get(i);
                 String username = new

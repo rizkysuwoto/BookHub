@@ -18,7 +18,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class EditBookForSaleActivity extends AppCompatActivity {
+public class EditBookItemActivity extends AppCompatActivity {
     private TextView bookTitleView;
     private EditText priceView;
     private EditText conditionView;
@@ -28,18 +28,18 @@ public class EditBookForSaleActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_book_for_sale);
+        setContentView(R.layout.activity_edit_book_item);
 
         Intent intent = getIntent();
         bookItem = intent.getParcelableExtra("bookItem");
         bookTitle = intent.getStringExtra("bookTitle");
 
         bookTitleView = (TextView)
-            findViewById(R.id.textView_editBookForSale_bookTitle);
+            findViewById(R.id.textView_editBookItem_bookTitle);
         priceView = (EditText)
-            findViewById(R.id.editText_editBookForSale_price);
+            findViewById(R.id.editText_editBookItem_price);
         conditionView = (EditText)
-            findViewById(R.id.editText_editBookForSale_condition);
+            findViewById(R.id.editText_editBookItem_condition);
 
         bookTitleView.setText(bookTitle);
         priceView.setText("" + bookItem.getPrice());
