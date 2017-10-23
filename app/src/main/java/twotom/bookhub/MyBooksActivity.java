@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-public class MyBooksActivity extends BooksListActivity {
+public class MyBooksActivity extends BookListActivity {
     @Override
     protected String getListName() {
         return "myBooks";
@@ -15,7 +15,7 @@ public class MyBooksActivity extends BooksListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ListView listView = (ListView) findViewById(R.id.listView_booksList);
+        ListView listView = (ListView) findViewById(R.id.listView_bookList);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view,

@@ -43,7 +43,7 @@
             android:label="@string/title_activity_view_profile"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".BookItemsListActivity"
+            android:name=".BookItemListActivity"
             android:label="Books for Sale"/>
         <activity
             android:name=".TransactionHistoryActivity"

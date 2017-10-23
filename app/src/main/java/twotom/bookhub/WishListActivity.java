@@ -2,14 +2,13 @@ package twotom.bookhub;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class WishListActivity extends BooksListActivity {
+public class WishListActivity extends BookListActivity {
     @Override
     protected String getListName() {
         return "wishList";
@@ -18,13 +17,13 @@ public class WishListActivity extends BooksListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ListView listView = (ListView) findViewById(R.id.listView_booksList);
+        ListView listView = (ListView) findViewById(R.id.listView_bookList);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view,
               int i, long l) {
                 Intent intent = new Intent(
-                    WishListActivity.this, BookItemsListActivity.class
+                    WishListActivity.this, BookItemListActivity.class
                 );
                 Book book = items.get(i);
                 intent.putParcelableArrayListExtra(

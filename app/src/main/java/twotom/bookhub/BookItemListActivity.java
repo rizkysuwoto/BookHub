@@ -21,19 +21,18 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class BookItemsListActivity extends AppCompatActivity {
+public class BookItemListActivity extends AppCompatActivity {
     ArrayList<BookItem> items;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bookitems_list);
+        setContentView(R.layout.activity_bookitem_list);
 
         Intent intent = getIntent();
         items = intent.getParcelableArrayListExtra("bookItems");
@@ -41,7 +40,7 @@ public class BookItemsListActivity extends AppCompatActivity {
             BookItemsListAdapter(this, items);
 
         ListView listView = (ListView)
-            findViewById(R.id.listView_bookItemsList);
+            findViewById(R.id.listView_bookItemList);
         listView.setAdapter(adapter);
         listView.setClickable(true);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -49,7 +48,7 @@ public class BookItemsListActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view,
               int i, long l) {
                 Intent intent = new Intent(
-                    BookItemsListActivity.this, ViewProfileActivity.class
+                    BookItemListActivity.this, ViewProfileActivity.class
                 );
                 intent.putExtra("seller", items.get(i).getSeller());
                 startActivity(intent);
@@ -88,17 +87,17 @@ public class BookItemsListActivity extends AppCompatActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             View view = convertView;
             if (view == null) {
-                view = inflater.inflate(R.layout.bookitems_list_item, null);
+                view = inflater.inflate(R.layout.bookitem_list_item, null);
             }
             TextView usernameView = (TextView)
-                view.findViewById(R.id.textView_bookItemsListItem_username);
+                view.findViewById(R.id.textView_bookItemListItem_username);
             TextView priceView = (TextView)
-                view.findViewById(R.id.textView_bookItemsListItem_price);
+                view.findViewById(R.id.textView_bookItemListItem_price);
             TextView conditionView = (TextView)
-                view.findViewById(R.id.textView_bookItemsListItem_condition);
+                view.findViewById(R.id.textView_bookItemListItem_condition);
             Button requestTransactionButton = (Button)
                 view.findViewById(
-                    R.id.button_bookItemsListItem_requestTransaction);
+                    R.id.button_bookItemListItem_requestTransaction);
 
             BookItem item = data.get(position);
 
@@ -108,7 +107,7 @@ public class BookItemsListActivity extends AppCompatActivity {
                   new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        BookItemsListActivity.this.requestTransaction(
+                        BookItemListActivity.this.requestTransaction(
                             (Integer) view.getTag(), (Button) view
                         );
                     }

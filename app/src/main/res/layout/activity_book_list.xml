@@ -7,20 +7,21 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="twotom.bookhub.BooksListActivity">
+    tools:context="twotom.bookhub.BookListActivity">
 
     <ListView
-        android:id="@+id/listView_booksList"
+        android:id="@+id/listView_bookList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button_booksList"
-        android:layout_alignParentTop="true" />
+        android:layout_above="@+id/button_bookList"
+        android:layout_alignParentTop="true"/>
+
     <Button
-        android:id="@+id/button_booksList_edit"
+        android:id="@+id/button_bookList_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Edit"
         android:layout_alignParentBottom="true"
-        android:onClick="onEdit" />
+        android:onClick="onEdit"
+        android:text="Edit"/>
 
 </RelativeLayout>

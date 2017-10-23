@@ -32,7 +32,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 // Super class for WishListActivity and MyBooksActivity
-public abstract class BooksListActivity extends AppCompatActivity {
+public abstract class BookListActivity extends AppCompatActivity {
     protected ArrayList<Book> items;
     private ArrayList<Integer> indexesToRemove;
     private ArrayList<CheckBox> checkBoxes;
@@ -44,14 +44,14 @@ public abstract class BooksListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_books_list);
+        setContentView(R.layout.activity_book_list);
 
         items = new ArrayList<>();
         indexesToRemove = new ArrayList<>();
         checkBoxes = new ArrayList<>();
         isEditing = false;
-        editButton = (Button) findViewById(R.id.button_booksList_edit);
-        ListView listView = (ListView) findViewById(R.id.listView_booksList);
+        editButton = (Button) findViewById(R.id.button_bookList_edit);
+        ListView listView = (ListView) findViewById(R.id.listView_bookList);
 
         final BooksListAdapter adapter = new BooksListAdapter(this, items);
         listView.setAdapter(adapter);
@@ -212,18 +212,18 @@ public abstract class BooksListActivity extends AppCompatActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             View view = convertView;
             if (view == null) {
-                view = inflater.inflate(R.layout.books_list_item, null);
+                view = inflater.inflate(R.layout.book_list_item, null);
             }
             TextView titleTextView = (TextView)
-                view.findViewById(R.id.textView_booksListItem_title);
+                view.findViewById(R.id.textView_bookListItem_title);
             TextView authorTextView = (TextView)
-                view.findViewById(R.id.textView_booksListItem_author);
+                view.findViewById(R.id.textView_bookListItem_author);
             Book book = data.get(position);
             titleTextView.setText(book.getTitle());
             authorTextView.setText(book.getAuthor());
 
             CheckBox checkBox = (CheckBox)
-                view.findViewById(R.id.checkBox_booksListItem);
+                view.findViewById(R.id.checkBox_bookListItem);
             checkBoxes.add(checkBox);
 
             checkBox.setTag(position);
