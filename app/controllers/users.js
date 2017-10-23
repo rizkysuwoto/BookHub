@@ -20,7 +20,7 @@ module.exports.create = function(req, res) {
             newUser.email = req.body.email;
             newUser.username = req.body.username;
             newUser.password = newUser.generateHash(req.body.password);
-            newUser.picture = req.body.picture;
+            newUser.profilePicture = req.body.picture;
             newUser.wishList = [];
             newUser.myBooks = [];
 
@@ -48,21 +48,27 @@ module.exports.read = function(req, res) {
     });
 };
 
-module.exports.update = function(req, res) {
-    var user = req.user;
-    user.email = req.body.email ? req.body.email : user.email;
-    user.username = req.body.username ? req.body.username : user.username;
-    user.password = req.body.password ? user.generateHash(req.body.password) : user.password;
-    user.picture = req.body.picture ? req.body.picture : user.picture;
-    user.save(function(err) {
-        if (err) {
-            return res.writeHead(400).end('Cannot update user');
+module.exports.update = async (req, res) => {
+    try {
+        const user = req.user;
+        const newPassword = req.body.newPassword;
+        const oldPassword = req.body.oldPassword;
+        if (oldPassword && newPassword) {
+            if (!user.validPassword(oldPassword)) {
+                throw new Error('Incorrect password');
+            }
+            user.password = user.generateHash(newPassword);
         }
-        res.writeHead(200, {"Content-Type": "application/json"});
-        user = user.toObject();
-        delete user.password;
-        res.end(JSON.stringify(user));
-    });
+        const profilePicture = req.body.profilePicture;
+        user.profilePicture = profilePicture ? profilePicture
+                                             : user.profilePicture;
+        await user.save();
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify({message: 'Profile updated'}));
+    }
+    catch (err) {
+        res.status(400).end(err.toString());
+    }
 };
 
 module.exports.delete = function(req, res) {
@@ -276,7 +282,7 @@ module.exports.getProfile = async (req, res) => {
             getBuyerRating(username),
         ]);
         const value = {
-            profilePicture: user.picture,
+            profilePicture: user.profilePicture,
             wishList: wishList,
             inventory: inventory,
             sellerRating: sellerRating,
