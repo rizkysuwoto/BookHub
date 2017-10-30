@@ -17,13 +17,9 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.ServerError;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -76,27 +72,7 @@ public abstract class BookListActivity extends AppCompatActivity {
                     Log.e("Error", e.getMessage());
                 }
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError e) {
-                NetworkResponse response = e.networkResponse;
-                if (e instanceof ServerError && response != null) {
-                    try {
-                        String message = new String(
-                            response.data,
-                            HttpHeaderParser.parseCharset(
-                                response.headers, "utf-8"
-                            )
-                        );
-                        Toast.makeText(getBaseContext(), message,
-                            Toast.LENGTH_LONG).show();
-                    }
-                    catch (Exception e1) {
-                        Log.e("Error", e1.getMessage());
-                    }
-                }
-            }
-        });
+        }, Utilities.getErrorListener(this));
         queue.add(request);
     }
 
@@ -147,27 +123,7 @@ public abstract class BookListActivity extends AppCompatActivity {
                         Log.e("Error", e.getMessage());
                     }
                 }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError e) {
-                    NetworkResponse response = e.networkResponse;
-                    if (e instanceof ServerError && response != null) {
-                        try {
-                            String message = new String(
-                                response.data,
-                                HttpHeaderParser.parseCharset(
-                                    response.headers, "utf-8"
-                                )
-                            );
-                            Toast.makeText(getBaseContext(), message,
-                                Toast.LENGTH_LONG).show();
-                        }
-                        catch (Exception e1) {
-                            Log.e("Error", e1.getMessage());
-                        }
-                    }
-                }
-            });
+            }, Utilities.getErrorListener(this));
             queue.add(request);
         }
     }
