@@ -1,6 +1,5 @@
 package twotom.bookhub;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -11,14 +10,11 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.regex.Pattern;
 
 public class RegistrationActivity extends AppCompatActivity {
     @Override
@@ -42,7 +38,7 @@ public class RegistrationActivity extends AppCompatActivity {
             requestBody.putOpt("password", password);
             requestBody.putOpt("picture", "");
         } catch (JSONException e) {
-            //TODO: handle error
+            Log.e("Error", e.getMessage());
         }
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = NetworkConfiguration.getURL() + "user";
@@ -60,14 +56,7 @@ public class RegistrationActivity extends AppCompatActivity {
                     Log.e("Error", e.getMessage());
                 }
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("Error: ", error.getMessage());
-            }
-        });
+        }, Utilities.getErrorListener(this));
         queue.add(jsObjRequest);
-
-
     }
 }
