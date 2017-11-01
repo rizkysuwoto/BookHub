@@ -28,7 +28,7 @@ require('./config/passport')(passport);
 
 app.use(morgan('dev'));
 app.use(cookieParser());
-app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.json({limit: '5mb'}));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(session({ secret: 'verysecretsessionsecret', resave: true, saveUninitialized: true }));
