@@ -333,10 +333,10 @@ module.exports.getTransaction = async (req, res) => {
             tradedWithRating: transaction.getTradedWithRating(username),
             tradedWith: transaction.getTradedWith(username),
             book: book,
-            dateRequested: transaction.getDateRequestedString(),
-            dateApproved: transaction.getDateApprovedString(),
-            approved: transaction.approved,
-            canApprove: transaction.canApprove(username),
+            requestMessage: transaction.getRequestMessage(username, true),
+            approvalMessage: transaction.getApprovalMessage(username, true),
+            canRate: transaction.canBeRated(),
+            canApprove: transaction.canBeApproved(username),
         };
         res.writeHead(200, {'Content-Type': 'application/json'});
         res.end(JSON.stringify(value));
@@ -355,7 +355,8 @@ module.exports.requestTransaction = async (req, res) => {
             book: book._id,
             sellerRating: -1,
             buyerRating: -1,
-            approved: false,
+            approvedByBuyer: false,
+            approvedBySeller: false,
             dateRequested: new Date(),
         });
         await transaction.save();
@@ -368,16 +369,24 @@ module.exports.requestTransaction = async (req, res) => {
 };
 
 module.exports.approveTransaction = async (req, res) => {
+    const username = req.user.username;
     try {
+        let transaction = await Transaction.findById(req.body.id);
+        const isSeller     = username === transaction.seller;
+        const approvedBy   = isSeller ? 'approvedBySeller' : 'approvedByBuyer';
+        const dateApproved = isSeller
+                           ? 'dateApprovedBySeller'
+                           : 'dateApprovedByBuyer';
         await Transaction.update(
             {_id: req.body.id},
-            {$set: {approved: true, dateApproved: new Date()}}
+            {$set: {[approvedBy]: true, [dateApproved]: new Date()}}
         );
-        const transaction = await Transaction.findById(req.body.id);
+        transaction = await Transaction.findById(req.body.id);
         res.writeHead(200, {'Content-Type': 'application/json'});
         res.end(JSON.stringify({
             message: 'Transaction approved',
-            dateApproved: transaction.getDateApprovedString(),
+            approvalMessage: transaction.getApprovalMessage(username, true),
+            canRate: transaction.canBeRated(),
         }));
     }
     catch (err) {

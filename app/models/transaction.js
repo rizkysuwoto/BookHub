@@ -7,23 +7,88 @@ var transactionSchema = mongoose.Schema({
     book: {type: mongoose.Schema.Types.ObjectId, ref: 'Book'},
     sellerRating: Number,
     buyerRating: Number,
-    approved: Boolean,
+    approvedBySeller: Boolean,
+    approvedByBuyer: Boolean,
     dateRequested: Date,
-    dateApproved: Date,
+    dateApprovedBySeller: Date,
+    dateApprovedByBuyer: Date,
 });
 
-transactionSchema.methods.getRequestMessage = function(username) {
-    return 'Requested by ' + (username === this.buyer ? 'you' : this.buyer);
+const dateOptions = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+};
+
+transactionSchema.methods.getNames = function(username) {
+    if (username === this.seller) {
+        return {
+            seller:  'you',
+            sellers: 'your',
+            buyer:   this.buyer,
+            buyers:  this.buyer + '\'s',
+        };
+    }
+    return {
+        seller:  this.seller,
+        sellers: this.seller + '\'s',
+        buyer:   'you',
+        buyers:  'your',
+    };
 }
 
-transactionSchema.methods.getApprovalMessage = function(username) {
-    if (this.approved) {
-        return 'Approved by ' + this.seller;
+transactionSchema.methods.getRequestMessage =
+  function(username, showDate = false) {
+    let requestMessage = 'Requested by ';
+    if (username === this.buyer) {
+        requestMessage += 'you';
     }
+    else {
+        requestMessage += this.buyer;
+    }
+    if (showDate) {
+        requestMessage += ' on ' + this.dateRequested.toLocaleDateString(
+            'en-US', dateOptions);
+    }
+    return requestMessage;
+}
+
+transactionSchema.methods.getApprovalMessage =
+  function(username, showDate = false) {
+    const names = this.getNames(username);
+
+    let sellerApproval = '';
+    if (this.approvedBySeller) {
+        sellerApproval += 'Approved by ' + names.seller;
+        if (showDate) {
+            sellerApproval += ' on ' +
+                this.dateApprovedBySeller.toLocaleDateString(
+                    'en-US', dateOptions);
+        }
+    }
+    else {
+        sellerApproval += 'Pending ' + names.sellers + ' approval';
+    }
+
+    let buyerApproval = '';
+    if (this.approvedByBuyer) {
+        buyerApproval += 'Approved by ' + names.buyer;
+        if (showDate) {
+            buyerApproval += ' on ' +
+                this.dateApprovedByBuyer.toLocaleDateString(
+                    'en-US', dateOptions);
+        }
+    }
+    else {
+        buyerApproval += 'Pending ' + names.buyers + ' approval';
+    }
+
     if (username === this.seller) {
-        return 'Pending your approval';
+        return sellerApproval + '\n' + buyerApproval;
     }
-    return 'Pending ' + this.seller + '\'s approval';
+    return buyerApproval + '\n' + sellerApproval;
 };
 
 transactionSchema.methods.isSeller = function(username) {
@@ -38,39 +103,13 @@ transactionSchema.methods.getTradedWithRating = function(username) {
     return username === this.seller ? this.buyerRating : this.sellerRating;
 };
 
-transactionSchema.methods.getShortDateString = function() {
-    if (this.dateApproved) {
-        return 'Approved ' + this.dateApproved.toLocaleDateString('en-US');
-    }
-    return 'Requested ' + this.dateRequested.toLocaleDateString('en-US');
-};
+transactionSchema.methods.canBeRated = function() {
+    return this.approvedBySeller && this.approvedByBuyer;
+}
 
-const dateOptions = {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-};
-
-transactionSchema.methods.getDateApprovedString = function() {
-    if (this.dateApproved) {
-        return ' on '
-             + this.dateApproved.toLocaleDateString('en-US', dateOptions);
-    }
-    return '';
-};
-
-transactionSchema.methods.getDateRequestedString = function() {
-    if (this.dateRequested) {
-        return ' on '
-             + this.dateRequested.toLocaleDateString('en-US', dateOptions);
-    }
-    return '';
-};
-
-transactionSchema.methods.canApprove = function(username) {
-    return username === this.seller && !this.approved;
+transactionSchema.methods.canBeApproved = function(username) {
+    return username === this.seller && !this.approvedBySeller
+        || username !== this.seller && !this.approvedByBuyer;
 };
 
 module.exports = mongoose.model('Transaction', transactionSchema);
