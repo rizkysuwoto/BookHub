@@ -87,8 +87,6 @@ public class TransactionHistoryActivity extends AppCompatActivity {
                 );
                 Transaction transaction = transactions.get(i);
                 intent.putExtra("transactionID", transaction.id);
-                intent.putExtra("requestMessage", transaction.requestMessage);
-                intent.putExtra("approvalMessage", transaction.approvalMessage);
                 intent.putExtra("bookTitle", transaction.bookTitle);
                 startActivity(intent);
             }

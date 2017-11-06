@@ -41,8 +41,6 @@ public class TransactionActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         transactionID = intent.getStringExtra("transactionID");
-        final String requestMessage = intent.getStringExtra("requestMessage");
-        final String approvalMessage = intent.getStringExtra("approvalMessage");
 
         thumbnailView = (ImageView)
             findViewById(R.id.imageView_transaction_thumbnail);
@@ -72,25 +70,26 @@ public class TransactionActivity extends AppCompatActivity {
                     String thumbnail = book.getString("thumbnail");
                     String author = book.getString("author");
                     String publisher = book.getString("publisher");
-                    String dateRequested = response.getString("dateRequested");
-                    String dateApproved = response.getString("dateApproved");
+                    String requestMessage =
+                        response.getString("requestMessage");
+                    String approvalMessage =
+                        response.getString("approvalMessage");
                     String tradedWith = response.getString("tradedWith");
                     int tradedWithRating = response.getInt("tradedWithRating");
-                    boolean approved = response.getBoolean("approved");
+                    boolean canRate = response.getBoolean("canRate");
                     boolean canApprove = response.getBoolean("canApprove");
-
                     Intent intent = getIntent();
                     thumbnailView.setImageBitmap(
                         Utilities.stringToBitmap(thumbnail)
                     );
                     bookInfoView.setText(intent.getStringExtra("bookTitle")
                         + "\n" + author + "\n" + publisher);
-                    requestMessageView.setText(requestMessage + dateRequested);
-                    approvalMessageView.setText(approvalMessage + dateApproved);
+                    requestMessageView.setText(requestMessage);
+                    approvalMessageView.setText(approvalMessage);
                     ratingLabelView.setText("Rate " + tradedWith);
                     ratingBar.setRating(tradedWithRating);
 
-                    if (approved) {
+                    if (canRate) {
                         ratingLayout.setVisibility(View.VISIBLE);
                     }
                     else if (canApprove) {
@@ -124,8 +123,14 @@ public class TransactionActivity extends AppCompatActivity {
                     String message = response.getString("message");
                     Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG)
                          .show();
+                    String approvalMessage =
+                        response.getString("approvalMessage");
+                    boolean canRate = response.getBoolean("canRate");
                     approveButton.setVisibility(View.GONE);
-                    ratingLayout.setVisibility(View.VISIBLE);
+                    approvalMessageView.setText(approvalMessage);
+                    if (canRate) {
+                        ratingLayout.setVisibility(View.VISIBLE);
+                    }
                 }
                 catch (JSONException e) {
                     Log.e("Error", e.getMessage());
