@@ -50,8 +50,9 @@
 
         <Button
             android:id="@+id/button_bookSearchResult_wishlist"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="6dp"
+            style="@style/button_style2"
             android:text="Add To Wish List"
             android:onClick="onAddToWishlist" />
 
@@ -59,13 +60,15 @@
             android:id="@+id/button_bookSearchResult_sell"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            style="@style/button_style2"
             android:text="Sell A Copy"
             android:onClick="onSellACopy" />
 
         <Button
             android:id="@+id/button_bookSearchResult_viewBookItems"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/button_style"
             android:text="View Sellers"
             android:onClick="onViewBookItems" />
 
