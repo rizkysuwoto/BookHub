@@ -14,11 +14,12 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:orientation="vertical">
+
         <EditText
-            android:id="@+id/textfield_bookSearch_isbn"
+            android:id="@+id/textfield_bookSearch_term"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="ISBN" />
+            android:hint="Search Book"/>
 
         <Button
             android:layout_width="match_parent"

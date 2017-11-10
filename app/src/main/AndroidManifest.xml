@@ -54,6 +54,9 @@
         <activity
             android:name=".EditBookItemActivity"
             android:label="Edit Book For Sale"/>
+        <activity
+            android:name=".BookSearchResultsActivity"
+            android:label="Search Results"/>
     </application>
 
 </manifest>

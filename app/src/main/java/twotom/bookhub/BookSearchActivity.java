@@ -18,8 +18,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class BookSearchActivity extends AppCompatActivity {
-    public static final int BOOK_SEACH_RESULT_CODE = 0;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,30 +25,22 @@ public class BookSearchActivity extends AppCompatActivity {
     }
 
     public void onSearch(View view) {
-        final String isbn =
-            ((EditText) findViewById(R.id.textfield_bookSearch_isbn))
+        final String term =
+            ((EditText) findViewById(R.id.textfield_bookSearch_term))
             .getText().toString();
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = NetworkConfiguration.getURL() + "search/" + isbn;
+        String url = NetworkConfiguration.getURL() + "searchBooks/" + term;
         JsonObjectRequest request = new JsonObjectRequest(
           Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                try {
-                    String thumbnail = response.getString("thumbnail");
-                    Intent intent = new Intent(
-                        BookSearchActivity.this, BookSearchResultActivity.class
-                    );
-                    Book book = Utilities.jsonObjectToBook(response);
-                    intent.putExtra("book", book);
-                    intent.putExtra("thumbnail", thumbnail);
-                    startActivity(intent);
-                    finish();
-                }
-                catch (JSONException e) {
-                    Log.e("Error", e.getMessage());
-                }
+                Intent intent = new Intent(
+                    BookSearchActivity.this, BookSearchResultsActivity.class
+                );
+                intent.putExtra("books", response.toString());
+                startActivity(intent);
+                finish();
             }
         }, Utilities.getErrorListener(this));
         request.setRetryPolicy(new DefaultRetryPolicy(
