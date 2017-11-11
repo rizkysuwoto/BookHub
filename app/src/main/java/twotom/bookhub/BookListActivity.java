@@ -1,6 +1,7 @@
 package twotom.bookhub;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,11 +28,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static twotom.bookhub.R.style.button_style3;
+import static twotom.bookhub.R.style.button_style_red;
+
 // Super class for WishListActivity and MyBooksActivity
 public abstract class BookListActivity extends AppCompatActivity {
     protected ArrayList<Book> items;
     private ArrayList<Integer> indexesToRemove;
     private ArrayList<CheckBox> checkBoxes;
+    private Color normalButtonColor;
     private boolean isEditing;
     private Button editButton;
 
@@ -206,9 +211,13 @@ public abstract class BookListActivity extends AppCompatActivity {
     private void setEditButtonText() {
         if (indexesToRemove.isEmpty()) {
             editButton.setText("Cancel");
+            editButton.setBackgroundResource(R.drawable.button_bg_blue);
+            editButton.setTextAppearance(R.style.button_style);
         }
         else {
             editButton.setText("Delete selected");
+            editButton.setBackgroundResource(R.drawable.button_bg_red);
+            editButton.setTextAppearance(R.style.button_style_red);
         }
     }
 }

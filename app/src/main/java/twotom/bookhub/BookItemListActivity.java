@@ -116,7 +116,7 @@ public class BookItemListActivity extends AppCompatActivity {
                 requestTransactionButton.setFocusableInTouchMode(false);
             }
             else {
-                requestTransactionButton.setVisibility(View.GONE);
+                disableTransactionButton(requestTransactionButton);
             }
 
             usernameView.setText(item.getSeller());
@@ -149,7 +149,7 @@ public class BookItemListActivity extends AppCompatActivity {
                     Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG)
                          .show();
                     item.setCanRequestTransaction(false);
-                    button.setVisibility(View.GONE);
+                    disableTransactionButton(button);
                 }
                 catch (JSONException e) {
                     Log.e("Error", e.getMessage());
@@ -165,5 +165,10 @@ public class BookItemListActivity extends AppCompatActivity {
         intent.putParcelableArrayListExtra("bookItems", items);
         setResult(RESULT_OK, intent);
         super.onBackPressed();
+    }
+
+    private void disableTransactionButton(Button button) {
+        button.setText("Transaction Requested");
+        button.setEnabled(false);
     }
 }

@@ -22,7 +22,7 @@
             android:label="Search a Book" />
         <activity
             android:name=".RegistrationActivity"
-            android:label="Register" />
+            android:label="Sign Up" />
         <activity
             android:name=".HomeActivity"
             android:label="BookHub" />
