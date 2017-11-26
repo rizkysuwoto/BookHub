@@ -66,8 +66,8 @@ public class ChatListActivity extends AppCompatActivity {
                         JSONObject object = array.getJSONObject(i);
                         Chat chat = new Chat(object);
                         chats.add(chat);
+                        adapter.notifyDataSetChanged();
                     }
-                    adapter.notifyDataSetChanged();
                 }
                 catch (JSONException e) {
                     Log.e("Error", e.getMessage());

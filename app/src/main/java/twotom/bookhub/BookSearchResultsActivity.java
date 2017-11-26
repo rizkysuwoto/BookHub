@@ -150,7 +150,7 @@ public class BookSearchResultsActivity extends AppCompatActivity {
             View view = convertView;
             if (view == null) {
                 view = inflater.inflate(
-                    R.layout.book_search_results_list_item, null
+                    R.layout.book_search_results_list_item, parent, false
                 );
             }
             TextView titleView = (TextView) view.findViewById(

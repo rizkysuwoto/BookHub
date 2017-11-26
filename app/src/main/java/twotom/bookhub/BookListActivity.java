@@ -173,7 +173,7 @@ public abstract class BookListActivity extends AppCompatActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             View view = convertView;
             if (view == null) {
-                view = inflater.inflate(R.layout.book_list_item, null);
+                view = inflater.inflate(R.layout.book_list_item, parent, false);
             }
             TextView titleTextView = (TextView)
                 view.findViewById(R.id.textView_bookListItem_title);

@@ -64,8 +64,8 @@ public class TransactionHistoryActivity extends AppCompatActivity {
                         JSONObject object = array.getJSONObject(i);
                         Transaction transaction = new Transaction(object);
                         transactions.add(transaction);
+                        adapter.notifyDataSetChanged();
                     }
-                    adapter.notifyDataSetChanged();
                 }
                 catch (JSONException e) {
                     Log.e("Error", e.getMessage());
@@ -126,7 +126,7 @@ public class TransactionHistoryActivity extends AppCompatActivity {
             View view = convertView;
             if (view == null) {
                 view = inflater.inflate(
-                    R.layout.transaction_history_list_item, null
+                    R.layout.transaction_history_list_item, parent, false
                 );
             }
             TextView bookView = (TextView) view.findViewById(

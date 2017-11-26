@@ -203,25 +203,25 @@ public class ChatActivity extends AppCompatActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             View view = convertView;
             if (view == null) {
-                view = inflater.inflate(
-                    R.layout.chat_message, parent, false
-                );
-                TextView messageView = (TextView)
-                    view.findViewById(R.id.textView_chatMessage_text);
-                Message message = data.get(position);
-                RelativeLayout.LayoutParams layoutParams =
-                    (RelativeLayout.LayoutParams) messageView.getLayoutParams();
-                messageView.setText(message.text);
-                if (username.equals(message.sender)) {
-                    layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-                    messageView.setBackgroundResource(R.drawable.bubble_bg_blue);
-                    messageView.setTextAppearance(R.style.bubble_blue);
-                }
-                else {
-                    layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-                    messageView.setBackgroundResource(R.drawable.bubble_bg_gray);
-                    messageView.setTextAppearance(R.style.bubble_gray);
-                }
+                view = inflater.inflate(R.layout.chat_message, parent, false);
+            }
+            TextView messageView = (TextView)
+                view.findViewById(R.id.textView_chatMessage_text);
+            Message message = data.get(position);
+            RelativeLayout.LayoutParams layoutParams =
+                (RelativeLayout.LayoutParams) messageView.getLayoutParams();
+            messageView.setText(message.text);
+            if (username.equals(message.sender)) {
+                layoutParams.removeRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                messageView.setBackgroundResource(R.drawable.bubble_bg_blue);
+                messageView.setTextAppearance(R.style.bubble_blue);
+            }
+            else {
+                layoutParams.removeRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                messageView.setBackgroundResource(R.drawable.bubble_bg_gray);
+                messageView.setTextAppearance(R.style.bubble_gray);
             }
             return view;
         }
