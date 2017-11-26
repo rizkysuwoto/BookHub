@@ -8,6 +8,7 @@ var userSchema = mongoose.Schema({
     profilePicture: String,
     wishList: Array,
     myBooks: Array,
+    deviceToken: String,
 });
 
 userSchema.methods.generateHash = function(password) {

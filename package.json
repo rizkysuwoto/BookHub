@@ -23,6 +23,7 @@
     "request": "latest",
     "request-promise-native": "latest",
     "bluebird": "latest",
-    "connect-ensure-login": "latest"
+    "connect-ensure-login": "latest",
+    "node-gcm": "latest"
   }
 }

@@ -1,9 +1,12 @@
 var User = require('../models/user');
 var Book = require('../models/book');
 var Transaction = require('../models/transaction');
+const Chat = require('../models/chat');
 var books = require('./books.js');
 var async = require('async');
 var request = require('request');
+const gcm = require('node-gcm');
+const gcmSender = new gcm.Sender();
 
 module.exports = {};
 
@@ -35,17 +38,22 @@ module.exports.create = function(req, res) {
     });
 };
 
-module.exports.read = function(req, res) {
-    User.findById(req.params.id, function(err, user) {
-        if (user) {
-            res.writeHead(200, {"Content-Type": "application/json"});
-            user = user.toObject();
-            delete user.password;
-            res.end(JSON.stringify(user));
-        } else {
-            return res.status(400).end('User not found');
+module.exports.read = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        if (!user) {
+            throw new Error('Invalid login credentials');
         }
-    });
+        user.deviceToken = req.params.deviceToken;
+        await user.save();
+        const returnUser = user.toObject();
+        delete returnUser.password;
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify(returnUser));
+    }
+    catch (err) {
+        res.status(400).end(err.toString());
+    }
 };
 
 module.exports.update = async (req, res) => {
@@ -300,9 +308,10 @@ module.exports.getProfile = async (req, res) => {
 module.exports.getTransactionHistory = async (req, res) => {
     const username = req.user.username;
     try {
-        const transactions = await Transaction.find({
-            $or: [{seller: username}, {buyer: username}]
-        });
+        const transactions = await Transaction.find(
+            {$or: [{seller: username}, {buyer: username}]},
+            {transaction: 1}
+        );
         const values = await Promise.all(transactions.map(async transaction => {
             const book = await Book.findById(transaction.book, {title: 1});
             return {
@@ -360,6 +369,13 @@ module.exports.requestTransaction = async (req, res) => {
             dateRequested: new Date(),
         });
         await transaction.save();
+        const chat = new Chat({
+            buyer: req.user.username,
+            seller: req.body.seller,
+            transaction: transaction._id,
+            history: [],
+        });
+        await chat.save();
         res.writeHead(200, {'Content-Type': 'application/json'});
         res.end(JSON.stringify({message: 'Transaction requested'}));
     }
@@ -412,6 +428,69 @@ module.exports.rateUser = async (req, res) => {
         await transaction.save();
         res.writeHead(200, {'Content-Type': 'application/json'});
         res.end(JSON.stringify({message: 'Rating updated'}));
+    }
+    catch (err) {
+        res.status(400).end(err.toString());
+    }
+};
+
+module.exports.getChatList = async (req, res) => {
+    const username = req.user.username;
+    try {
+        const chats = await Chat.find({
+            $or: [{buyer: username}, {seller: username}]
+        });
+        const returnChats = await Promise.all(chats.map(async chat => {
+            const transaction = await Transaction.findById(chat.transaction);
+            const book = await Book.findById(transaction.book, {title: 1});
+            return {
+                seller: transaction.seller,
+                buyer: transaction.buyer,
+                bookTitle: book.title,
+                transactionID: transaction._id.toString(),
+            };
+        }));
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify({chats: returnChats}));
+    }
+    catch (err) {
+        res.status(400).end(err.toString());
+    }
+};
+
+module.exports.getChat = async (req, res) => {
+    const username = req.user.username;
+    try {
+        const chat = await
+            Chat.findOne({transaction: req.params.transactionID});
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify({
+            chatID: chat._id.toString(),
+            messages: chat.history,
+        }));
+    }
+    catch (err) {
+        res.status(400).end(err.toString());
+    }
+};
+
+module.exports.sendMessage = async (req, res) => {
+    try {
+        const receiver = await User.findOne({username: req.body.receiver});
+        const gcmMessage = new gcm.Message();
+        const newMessage = {
+            sender: req.user.username,
+            text: req.body.text,
+        };
+        gcmMessage.addData(newMessage);
+        const chat = await Chat.findById(req.body.chatID);
+        chat.history.push(newMessage);
+        await chat.save();
+        gcmSender.send(gcmMessage, {
+            registrationTokens: [receiver.deviceToken]
+        });
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify({success: true}));
     }
     catch (err) {
         res.status(400).end(err.toString());
