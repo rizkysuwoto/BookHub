@@ -27,8 +27,8 @@ dependencies {
 
     compile 'com.android.volley:volley:1.0.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+
+    compile 'com.google.firebase:firebase-messaging:9.2.1'
 }
-
-
 
 apply plugin: 'com.google.gms.google-services'

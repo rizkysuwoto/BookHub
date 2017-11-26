@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "396595879674",
-    "firebase_url": "https://bookhub-3ec4b.firebaseio.com",
-    "project_id": "bookhub-3ec4b",
-    "storage_bucket": "bookhub-3ec4b.appspot.com"
+    "project_number": "602794631588",
+    "firebase_url": "https://bookhub-79b69.firebaseio.com",
+    "project_id": "bookhub-79b69",
+    "storage_bucket": "bookhub-79b69.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:396595879674:android:5b84013644977ad4",
+        "mobilesdk_app_id": "1:602794631588:android:5b84013644977ad4",
         "android_client_info": {
           "package_name": "twotom.bookhub"
         }
       },
       "oauth_client": [
         {
-          "client_id": "396595879674-becbjusp6v0isjj31q77g8g7j7eq05j0.apps.googleusercontent.com",
+          "client_id": "602794631588-g9m6v4ui4dambdrb8rco48vc6fba5vmb.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCU0NkeOzYNxXt2xHQjMH5TJ16hh0AsB5Y"
+          "current_key": "AIzaSyDqO81TfHPVAqD8z_OecOKwKFVw1oGyvQA"
         }
       ],
       "services": {

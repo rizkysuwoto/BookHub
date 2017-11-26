@@ -34,7 +34,8 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void onChats(View view) {
-
+        Intent intent = new Intent(this, ChatListActivity.class);
+        startActivity(intent);
     }
 
     public void onTransactions(View view) {

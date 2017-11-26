@@ -12,6 +12,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
         try {
             requestBody.putOpt("username", ((EditText) findViewById(R.id.text_login_username)).getText().toString());
             requestBody.putOpt("password", ((EditText) findViewById(R.id.text_login_password)).getText().toString());
+            requestBody.putOpt("deviceToken", FirebaseInstanceId.getInstance().getToken());
         } catch (JSONException e) {
             Log.e("Error", e.getMessage());
         }
