@@ -89,6 +89,7 @@ public class TransactionHistoryActivity extends AppCompatActivity {
                 intent.putExtra("transactionID", transaction.id);
                 intent.putExtra("bookTitle", transaction.bookTitle);
                 startActivity(intent);
+                finish();
             }
         });
     }

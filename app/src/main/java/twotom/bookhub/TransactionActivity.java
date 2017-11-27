@@ -1,6 +1,9 @@
 package twotom.bookhub;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -33,9 +36,20 @@ public class TransactionActivity extends AppCompatActivity {
     private TextView bookInfoView;
     private RequestQueue requestQueue;
 
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            recreate();
+        }
+    };
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction);
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("twotom.bookhub.TRANSACTION_APPROVED");
+        registerReceiver(broadcastReceiver, intentFilter);
 
         requestQueue = Volley.newRequestQueue(this);
 
@@ -102,6 +116,12 @@ public class TransactionActivity extends AppCompatActivity {
             }
         }, Utilities.getErrorListener(this));
         requestQueue.add(request);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
     }
 
     public void onApprove(View view) {
