@@ -47,7 +47,7 @@
             android:label="Books for Sale"/>
         <activity
             android:name=".TransactionHistoryActivity"
-            android:label="Transaction History"/>
+            android:label="Transactions"/>
         <activity
             android:name=".TransactionActivity"
             android:label="Transaction"/>

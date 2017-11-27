@@ -99,6 +99,7 @@ public class ChatActivity extends AppCompatActivity {
         String url = NetworkConfiguration.getURL() + "chat/"
                    + intent.getStringExtra("transactionID");
         receiver = intent.getStringExtra("otherUser");
+        getSupportActionBar().setTitle("Chat with " + receiver);
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
           url, null, new Response.Listener<JSONObject>() {
