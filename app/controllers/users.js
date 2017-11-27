@@ -309,8 +309,7 @@ module.exports.getTransactionHistory = async (req, res) => {
     const username = req.user.username;
     try {
         const transactions = await Transaction.find(
-            {$or: [{seller: username}, {buyer: username}]},
-            {transaction: 1}
+            {$or: [{seller: username}, {buyer: username}]}
         );
         const values = await Promise.all(transactions.map(async transaction => {
             const book = await Book.findById(transaction.book, {title: 1});
@@ -398,6 +397,15 @@ module.exports.approveTransaction = async (req, res) => {
             {$set: {[approvedBy]: true, [dateApproved]: new Date()}}
         );
         transaction = await Transaction.findById(req.body.id);
+        const otherUsername = username === transaction.seller
+                            ? transaction.buyer
+                            : transaction.seller;
+        const otherUser = await User.findOne({username: otherUsername});
+        const gcmMessage = new gcm.Message();
+        gcmMessage.addData({type: 'transaction'});
+        gcmSender.send(gcmMessage, {
+            registrationTokens: [otherUser.deviceToken]
+        });
         res.writeHead(200, {'Content-Type': 'application/json'});
         res.end(JSON.stringify({
             message: 'Transaction approved',
@@ -479,6 +487,7 @@ module.exports.sendMessage = async (req, res) => {
         const receiver = await User.findOne({username: req.body.receiver});
         const gcmMessage = new gcm.Message();
         const newMessage = {
+            type: 'chat',
             sender: req.user.username,
             text: req.body.text,
         };
